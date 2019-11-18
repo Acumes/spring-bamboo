@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bamboo.common.menu.dao.MenuDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.bamboo.common.menu.entity.Menu">
+        <id column="id" property="id" />
+        <result column="parent_id" property="parentId" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="alias" property="alias" />
+        <result column="path" property="path" />
+        <result column="source" property="source" />
+        <result column="sort" property="sort" />
+        <result column="category" property="category" />
+        <result column="action" property="action" />
+        <result column="is_open" property="isOpen" />
+        <result column="remark" property="remark" />
+    </resultMap>
+    <resultMap id="BaseResultMapVo" type="com.bamboo.common.menu.vo.response.GetMenuResponse">
+        <id column="id" property="id" />
+        <result column="parent_id" property="parentId" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="alias" property="alias" />
+        <result column="path" property="path" />
+        <result column="source" property="source" />
+        <result column="sort" property="sort" />
+        <result column="category" property="category" />
+        <result column="action" property="action" />
+        <result column="is_open" property="isOpen" />
+        <result column="remark" property="remark" />
+    </resultMap>
+
+    <select id="getTree" resultMap="BaseResultMapVo">
+        select * from bamboo_menu where 1=1
+        <if test="parentId != null">
+            and m.parent_id = #{menuId}
+        </if>
+    </select>
+    <select id="selRolePermission" resultMap="BaseResultMapVo">
+        select brm.role_id,bm.id,bm.name name,bm.code,bm.alias,bm.path,
+        bm.source,bm.sort,bm.category,bm.action,bm.is_open,bm.remark
+        from bamboo_role_menu brm,bamboo_menu bm where 1=1 and bm.id = brm.menu_id
+        <if test="roleId != null and roleId != ''">
+            and brm.role_id = #{roleId}
+        </if>
+        <if test="id != null">
+            and bm.parent_id = #{menuId}
+        </if>
+        ORDER BY menu_id
+    </select>
+
+</mapper>
