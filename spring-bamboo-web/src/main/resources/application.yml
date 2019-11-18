@@ -1,0 +1,302 @@
+spring:
+  profiles:
+    include: common
+#----------------------------------------------- dev -------------------------------------------------------------
+---
+spring:
+  profiles: dev
+
+  datasource:
+    url: jdbc:mysql://192.168.1.136:3306/bamboo?useUnicode=true&allowPublicKeyRetrieval=true&useSSL=false&allowMultiQueries=true&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  redis:
+    password: 123456
+    database: 0
+    port: 6379
+    host: 192.168.1.53
+    timeout: 1000
+
+http:
+  port: 8080
+
+server:
+  port: 9966
+
+enable:
+  https: false
+
+#exchangeProperties:
+#  url: https://exapi.91cpct.com/exapi/api/index
+#  appId: 2
+#  ##我方私钥
+#  privateKey: MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAKLUClYeM6iHOU9KIaLTjcikH6eTHlZdgINCbqq/FXQfBof2WajVW0BmU0VETA87se15CqQGY0RYqCCCyfs7WsZvGEGTcBj1zL1FOIHKR5J89oCYxhj+Ajlgo8Bq/nv5myxIUQaNpQeYHrsHA66uvJGxXlENpWj0Fm2HqX8pe70nAgMBAAECgYEAoc1bSCBS7RESnfvoWMkoh0ywN/E1oFThs418MygWxYFfGBRxHBiHyQLllFs9yZVkRbqWHFBMrEn9J/FPjNt6Y0YnTYoSmURIneeg68oLejy9EwAhaVblFUdrK4pxhSEiWMqMtbqt8C950EuTWkV7qGb0fN7KNsIUL9ABixvUlcECQQDeDsvaNTZd+8/9VpxTgOO/fpxNqnax7FmBRwZbbdi6XdxDepKwMDyh2/rK2Yfq6C9u4eBGB+dVv7CKJ21NbSJJAkEAu7eSPcAFhST+Yyr7q4xYkpONEYaM5VYXC6ePiYPXFAA/0d7tOWEQWILfqVo6SmsO3alJIIWBccQPCVvJIaLj7wJBAIs1/3q3LXRSL5yFNc/r19vvhhHysiLtJ1eyrTuYa+y6dyIer+Og+gIHJP0SzvDnywTaun1s6wyI9iZGfXGy33ECQEJDNI4zoD81pc6ft6MAsatcBmnvUwEJeK0WguaJ8XwP8ndE9/xPNRPpbsY7IWRvkhnQzg160wyzppMpIUCMXWUCQFNShf5ipCAdzCNpGWY0ZxW3Rb8sQdzrdM419ToL2aylPR8hTVoDy2VJtKUfafToFgnN77G87yfliHfVk0DxFuM=
+#  ##对方公钥
+#  publicKey: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCTgFKkQ8EE+NRhyqnSHuNaN1xzfnSlJag1XSOxHjTg08a3xeFbHt/OP3gRX48SDx98Eg8jXKxp0SfWmCgpLkTuHYh8WtJ3Rwnlt+1gZhTkXD0mbUakA9P1y7hKqql80FCBgtCnvciJWmm7xIhAZF0tYXBiyrcJeQu0z3nVqE7QhQIDAQAB
+#----------------------------------------------- test -------------------------------------------------------------
+---
+spring:
+  profiles: test
+
+  datasource:
+    url: jdbc:mysql://192.168.1.252:33061/miner?useUnicode=true&allowPublicKeyRetrieval=true&useSSL=false&allowMultiQueries=true&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  redis:
+    password: 123456
+    database: 0
+    port: 6379
+    host: 192.168.1.252
+    timeout: 1000
+
+server:
+#  ssl:
+#    #生成证书的名字
+#    key-store: classpath:cert/2857176_k8s.catrun.common.cn.pfx
+#    #    #密钥库密码
+#    key-store-password: mtuX3YEB
+#  port: 9092
+
+kafka:
+  ssl:
+    endpoint:
+      identification:
+        algorithm:
+    truststore:
+      password: 123456
+      location: server.keystore.jks
+    keystore:
+      password: 123456
+      location: server.keystore.jks
+  use-ssl: true
+  AES: xxx
+  consumer:
+    servers: 119.147.149.206:9092
+    enable:
+      auto:
+        commit: false
+    session:
+      timeout: 6000
+    auto:
+      commit:
+        interval: 100
+      offset:
+        reset: latest
+    group:
+      id: web-group
+    concurrency: 10
+    sasl:
+      laintext: SASL_SSL
+      mechanism: PLAIN
+    username: admin
+    password: admin-sec
+
+  producer:
+    servers: 119.147.149.206:9092
+    retries: 0
+    batch:
+      size: 4096
+    linger: 1
+    topics : 1,miner_exec
+    buffer:
+      memory: 40960
+    sasl:
+      laintext: SASL_SSL
+      mechanism: PLAIN
+    username: admin
+    password: admin-sec
+http:
+  port: 8081
+
+enable:
+  https: false
+
+exchangeProperties:
+  url: https://exapi.91cpct.common/exapi/api/index
+  appId: 2
+  ##我方私钥
+  privateKey: MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAKLUClYeM6iHOU9KIaLTjcikH6eTHlZdgINCbqq/FXQfBof2WajVW0BmU0VETA87se15CqQGY0RYqCCCyfs7WsZvGEGTcBj1zL1FOIHKR5J89oCYxhj+Ajlgo8Bq/nv5myxIUQaNpQeYHrsHA66uvJGxXlENpWj0Fm2HqX8pe70nAgMBAAECgYEAoc1bSCBS7RESnfvoWMkoh0ywN/E1oFThs418MygWxYFfGBRxHBiHyQLllFs9yZVkRbqWHFBMrEn9J/FPjNt6Y0YnTYoSmURIneeg68oLejy9EwAhaVblFUdrK4pxhSEiWMqMtbqt8C950EuTWkV7qGb0fN7KNsIUL9ABixvUlcECQQDeDsvaNTZd+8/9VpxTgOO/fpxNqnax7FmBRwZbbdi6XdxDepKwMDyh2/rK2Yfq6C9u4eBGB+dVv7CKJ21NbSJJAkEAu7eSPcAFhST+Yyr7q4xYkpONEYaM5VYXC6ePiYPXFAA/0d7tOWEQWILfqVo6SmsO3alJIIWBccQPCVvJIaLj7wJBAIs1/3q3LXRSL5yFNc/r19vvhhHysiLtJ1eyrTuYa+y6dyIer+Og+gIHJP0SzvDnywTaun1s6wyI9iZGfXGy33ECQEJDNI4zoD81pc6ft6MAsatcBmnvUwEJeK0WguaJ8XwP8ndE9/xPNRPpbsY7IWRvkhnQzg160wyzppMpIUCMXWUCQFNShf5ipCAdzCNpGWY0ZxW3Rb8sQdzrdM419ToL2aylPR8hTVoDy2VJtKUfafToFgnN77G87yfliHfVk0DxFuM=
+  ##对方公钥
+  publicKey: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCTgFKkQ8EE+NRhyqnSHuNaN1xzfnSlJag1XSOxHjTg08a3xeFbHt/OP3gRX48SDx98Eg8jXKxp0SfWmCgpLkTuHYh8WtJ3Rwnlt+1gZhTkXD0mbUakA9P1y7hKqql80FCBgtCnvciJWmm7xIhAZF0tYXBiyrcJeQu0z3nVqE7QhQIDAQAB
+#----------------------------------------------- stage -------------------------------------------------------------
+---
+spring:
+  profiles: stage
+
+  datasource:
+    url: jdbc:mysql://47.75.212.24:3306/miner?useUnicode=true&allowPublicKeyRetrieval=true&useSSL=false&allowMultiQueries=true&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  redis:
+    password: 123456
+    database: 0
+    port: 6379
+    host: 47.75.212.24
+    timeout: 1000
+
+server:
+  ssl:
+    #生成证书的名字
+    key-store: classpath:cert/2628429_dev-polar.grandhelmsman.common.pfx
+    #    #密钥库密码
+    key-store-password: SRASE201
+  port: 9092
+
+http:
+  port: 8081
+
+enable:
+  https: true
+
+kafka:
+  ssl:
+    endpoint:
+      identification:
+        algorithm:
+    truststore:
+      password: 123456
+      location: server.keystore.jks
+    keystore:
+      password: 123456
+      location: server.keystore.jks
+  use-ssl: true
+  AES: xxx
+  consumer:
+    servers: 119.147.149.206:9092
+    enable:
+      auto:
+        commit: false
+    session:
+      timeout: 6000
+    auto:
+      commit:
+        interval: 100
+      offset:
+        reset: latest
+    group:
+      id: app-group
+    concurrency: 10
+    sasl:
+      laintext: SASL_SSL
+      mechanism: PLAIN
+    username: admin
+    password: admin-sec
+
+  producer:
+    servers: 119.147.149.206:9092
+    retries: 0
+    batch:
+      size: 4096
+    linger: 1
+    topics : 1,miner_exec
+    buffer:
+      memory: 40960
+    sasl:
+      laintext: SASL_SSL
+      mechanism: PLAIN
+    username: admin
+    password: admin-sec
+
+
+exchangeProperties:
+  url: https://exapi.91cpct.common/exapi/api/index
+  appId: 2
+  ##我方私钥
+  privateKey: MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAKLUClYeM6iHOU9KIaLTjcikH6eTHlZdgINCbqq/FXQfBof2WajVW0BmU0VETA87se15CqQGY0RYqCCCyfs7WsZvGEGTcBj1zL1FOIHKR5J89oCYxhj+Ajlgo8Bq/nv5myxIUQaNpQeYHrsHA66uvJGxXlENpWj0Fm2HqX8pe70nAgMBAAECgYEAoc1bSCBS7RESnfvoWMkoh0ywN/E1oFThs418MygWxYFfGBRxHBiHyQLllFs9yZVkRbqWHFBMrEn9J/FPjNt6Y0YnTYoSmURIneeg68oLejy9EwAhaVblFUdrK4pxhSEiWMqMtbqt8C950EuTWkV7qGb0fN7KNsIUL9ABixvUlcECQQDeDsvaNTZd+8/9VpxTgOO/fpxNqnax7FmBRwZbbdi6XdxDepKwMDyh2/rK2Yfq6C9u4eBGB+dVv7CKJ21NbSJJAkEAu7eSPcAFhST+Yyr7q4xYkpONEYaM5VYXC6ePiYPXFAA/0d7tOWEQWILfqVo6SmsO3alJIIWBccQPCVvJIaLj7wJBAIs1/3q3LXRSL5yFNc/r19vvhhHysiLtJ1eyrTuYa+y6dyIer+Og+gIHJP0SzvDnywTaun1s6wyI9iZGfXGy33ECQEJDNI4zoD81pc6ft6MAsatcBmnvUwEJeK0WguaJ8XwP8ndE9/xPNRPpbsY7IWRvkhnQzg160wyzppMpIUCMXWUCQFNShf5ipCAdzCNpGWY0ZxW3Rb8sQdzrdM419ToL2aylPR8hTVoDy2VJtKUfafToFgnN77G87yfliHfVk0DxFuM=
+  ##对方公钥
+  publicKey: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCTgFKkQ8EE+NRhyqnSHuNaN1xzfnSlJag1XSOxHjTg08a3xeFbHt/OP3gRX48SDx98Eg8jXKxp0SfWmCgpLkTuHYh8WtJ3Rwnlt+1gZhTkXD0mbUakA9P1y7hKqql80FCBgtCnvciJWmm7xIhAZF0tYXBiyrcJeQu0z3nVqE7QhQIDAQAB
+
+#----------------------------------------------- prod -------------------------------------------------------------
+---
+spring:
+  profiles: prod
+
+  datasource:
+    url: jdbc:mysql://47.75.212.24:3306/miner?useUnicode=true&allowPublicKeyRetrieval=true&useSSL=false&allowMultiQueries=true&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  redis:
+    password: 123456
+    database: 0
+    port: 6379
+    host: 47.75.212.24
+    timeout: 1000
+
+server:
+  ssl:
+    #生成证书的名字
+    key-store: classpath:cert/2628429_dev-polar.grandhelmsman.common.pfx
+    #    #密钥库密码
+    key-store-password: SRASE201
+  port: 9092
+
+http:
+  port: 8081
+
+enable:
+  https: true
+
+kafka:
+  ssl:
+    endpoint:
+      identification:
+        algorithm:
+    truststore:
+      password: 123456
+      location: server.keystore.jks
+    keystore:
+      password: 123456
+      location: server.keystore.jks
+  use-ssl: true
+  AES: xxx
+  consumer:
+    servers: 119.147.149.206:9092
+    enable:
+      auto:
+        commit: false
+    session:
+      timeout: 6000
+    auto:
+      commit:
+        interval: 100
+      offset:
+        reset: latest
+    group:
+      id: app-group
+    concurrency: 10
+    sasl:
+      laintext: SASL_SSL
+      mechanism: PLAIN
+    username: admin
+    password: admin-sec
+
+  producer:
+    servers: 119.147.149.206:9092
+    retries: 0
+    batch:
+      size: 4096
+    linger: 1
+    topics : 1,miner_exec
+    buffer:
+      memory: 40960
+    sasl:
+      laintext: SASL_SSL
+      mechanism: PLAIN
+    username: admin
+    password: admin-sec
+
+exchangeProperties:
+  url: https://exapi.91cpct.common/exapi/api/index
+  appId: 2
+  ##我方私钥
+  privateKey: MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAKLUClYeM6iHOU9KIaLTjcikH6eTHlZdgINCbqq/FXQfBof2WajVW0BmU0VETA87se15CqQGY0RYqCCCyfs7WsZvGEGTcBj1zL1FOIHKR5J89oCYxhj+Ajlgo8Bq/nv5myxIUQaNpQeYHrsHA66uvJGxXlENpWj0Fm2HqX8pe70nAgMBAAECgYEAoc1bSCBS7RESnfvoWMkoh0ywN/E1oFThs418MygWxYFfGBRxHBiHyQLllFs9yZVkRbqWHFBMrEn9J/FPjNt6Y0YnTYoSmURIneeg68oLejy9EwAhaVblFUdrK4pxhSEiWMqMtbqt8C950EuTWkV7qGb0fN7KNsIUL9ABixvUlcECQQDeDsvaNTZd+8/9VpxTgOO/fpxNqnax7FmBRwZbbdi6XdxDepKwMDyh2/rK2Yfq6C9u4eBGB+dVv7CKJ21NbSJJAkEAu7eSPcAFhST+Yyr7q4xYkpONEYaM5VYXC6ePiYPXFAA/0d7tOWEQWILfqVo6SmsO3alJIIWBccQPCVvJIaLj7wJBAIs1/3q3LXRSL5yFNc/r19vvhhHysiLtJ1eyrTuYa+y6dyIer+Og+gIHJP0SzvDnywTaun1s6wyI9iZGfXGy33ECQEJDNI4zoD81pc6ft6MAsatcBmnvUwEJeK0WguaJ8XwP8ndE9/xPNRPpbsY7IWRvkhnQzg160wyzppMpIUCMXWUCQFNShf5ipCAdzCNpGWY0ZxW3Rb8sQdzrdM419ToL2aylPR8hTVoDy2VJtKUfafToFgnN77G87yfliHfVk0DxFuM=
+  ##对方公钥
+  publicKey: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCq5x7cbf6es7E9Br1lhL0QDlCWZJPlBXRsKRvqDFbI20ROj5DrZwRPfOPkK02+dCz+piAaurysKfokmDJ1VyNXZFXDo8Lr03oE3g37B4t7mBwnbvrwJjgwuoaUyX6JzvFsb1anckB+trS4ApUh8JG6wLmGmYmUNFTq8qYkloz7kQIDAQAB

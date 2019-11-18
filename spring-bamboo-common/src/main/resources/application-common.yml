@@ -1,0 +1,75 @@
+#----------------------------------------------- commons -------------------------------------------------------------
+system:
+  api:
+    secret: LSqbGebeSFHbdbgjTU8xA8KffSNcRXQC
+    user:
+      secret: QzCL4EI1gPZcHIHt7CwaM6g5WadKAm0h
+jwt:
+  #请求头
+  header: Authorization
+  #密钥
+  signing: ovjDUUsK7MPDvqVM06lOvFNVBretsrvmFbolFgnORNnlM
+  #超时时间
+  expiration: 604800
+  #不用验证的地址
+  passTokenPaths: /swagger-resources,/api2doc/home.html,/doc.html,/webjars,/captcha,/login,/test,/base64Captcha
+
+server:
+  servlet:
+    context-path: /bamboo
+  profiles:
+    active: dev
+
+spring:
+  profiles:
+    active: dev
+  #  mail:
+  #    username: 295277302@qq.com
+  #    host: smtp.exmail.qq.com
+  #    password: uqohxpwwbiqucahj
+  #    properties:
+  #      mail:
+  #        smtp:
+  #          auth: true
+  #          starttls:
+  #            enable: true
+  #            required: true
+  mail:
+    host: smtp.exmail.qq.com
+    protocol: smtp
+    port: 465
+    username: systemos@grandhelmsman.com #邮箱地址
+    password: Zdzadmin-2019 #邮箱密码
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+            socketFactory:
+              class: com.sun.mail.util.MailSSLSocketFactory
+              fallback: false
+
+
+#pagehelper分页插件配置
+pagehelper:
+  helperDialect: postgresql #设置sql语言
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+#sms:
+#  appid: 1400234171
+#  appkey: ba56735c97f2eba0ac98291c4ec14bbb
+#  templateId: 407947
+#  smsSign: 正舵者
+#  expire: 120
+#  length: 6
+logging:
+  level:
+    io.swagger.models.parameters.AbstractSerializableParameter: error
+    com.bamboo: DEBUG
+mybatis-plus:
+  #  mapper-locations: classpath*:/mapper/**Mapper.xml
+  mapper-locations: classpath*:/mapper/**/**.xml
+
+noauthorization: /app/user/login2,/taurus,/WeChat,/common/getInstructions,/appVersion/checkUpdate,/contract
