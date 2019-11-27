@@ -58,10 +58,12 @@ public class RoleServiceImpl extends BaseService<RoleDao, Role> implements IRole
     @Override
     public BaseResponse<RolePageResponse> pageList(RolePageRequest request) {
         RolePageResponse result=new RolePageResponse();
-        Page<GetRoleResponse> page = PageHelper.startPage(request.getPageNo(), request.getPageSize(), true);
+//        Page<GetRoleResponse> page = PageHelper.startPage(request.getPageNo(), request.getPageSize(), true);
+        PageHelper.startPage(request.getPageNo(), request.getPageSize(), true);
         List<GetRoleResponse> list = roleDao.list(request);
-        result.setData(list);
-        CommonUtil.setPage(result,page);
+        PageInfo<GetRoleResponse> pageInfo = new PageInfo<GetRoleResponse>(list);
+        result.setData(pageInfo.getList());
+        CommonUtil.setPage(result,pageInfo);
         return new BaseResponse<>(result);
     }
 

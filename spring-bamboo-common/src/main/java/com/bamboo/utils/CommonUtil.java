@@ -239,7 +239,7 @@ public class CommonUtil {
         System.out.println(f.get(obj));
     }
 
-    public static void setPage(Object o, Page<GetRoleResponse> page) {
+    public static void setPage(Object o, PageInfo page) {
             // 获取obj类的字节文件对象
         try {
             BasePageResponse response = new BasePageResponse();

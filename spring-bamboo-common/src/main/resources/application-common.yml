@@ -53,7 +53,7 @@ spring:
 
 #pagehelper分页插件配置
 pagehelper:
-  helperDialect: postgresql #设置sql语言
+  helperDialect: mysql #设置sql语言
   reasonable: true
   supportMethodsArguments: true
   params: count=countSql
