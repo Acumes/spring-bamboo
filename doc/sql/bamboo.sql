@@ -11,11 +11,55 @@
  Target Server Version : 80017
  File Encoding         : 65001
 
- Date: 18/11/2019 20:45:24
+ Date: 08/01/2020 21:17:09
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for bamboo_basic_information
+-- ----------------------------
+DROP TABLE IF EXISTS `bamboo_basic_information`;
+CREATE TABLE `bamboo_basic_information`  (
+  `id` bigint(20) NOT NULL,
+  `code` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '编码',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '名称',
+  `current_price` decimal(10, 2) NULL DEFAULT NULL COMMENT '当前价格',
+  `target_price` decimal(10, 2) NULL DEFAULT NULL COMMENT '目标价格',
+  `concept` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '概念',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of bamboo_basic_information
+-- ----------------------------
+INSERT INTO `bamboo_basic_information` VALUES (1231231, 'sh600635', '大众公用', 5.10, NULL, NULL);
+INSERT INTO `bamboo_basic_information` VALUES (3453453, 'sz000735', '罗 牛 山', 9.99, NULL, NULL);
+
+-- ----------------------------
+-- Table structure for bamboo_information_history
+-- ----------------------------
+DROP TABLE IF EXISTS `bamboo_information_history`;
+CREATE TABLE `bamboo_information_history`  (
+  `id` bigint(20) NOT NULL,
+  `code` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '编码',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '名称',
+  `opening_price` decimal(10, 2) NULL DEFAULT NULL COMMENT '开盘价',
+  `highest_price` decimal(10, 2) NULL DEFAULT NULL COMMENT '最高价',
+  `minimum_price` decimal(10, 2) NULL DEFAULT NULL COMMENT '最低价',
+  `current_price` decimal(10, 2) NULL DEFAULT NULL COMMENT '当前价格',
+  `yesterday_closing_price` decimal(10, 2) NULL DEFAULT NULL COMMENT '昨收',
+  `closing_price` decimal(10, 2) NULL DEFAULT NULL COMMENT '收盘价',
+  `rate` decimal(6, 3) NULL DEFAULT NULL COMMENT '比例',
+  `current_turnover_amount` decimal(18, 2) NULL DEFAULT NULL COMMENT '当前成交金额',
+  `turnover_amount` decimal(18, 2) NULL DEFAULT NULL COMMENT '成交金额',
+  `current_transaction_number` int(11) NULL DEFAULT NULL COMMENT '当前成交数',
+  `transaction_number` int(11) NULL DEFAULT NULL COMMENT '成交数',
+  `vcv` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '1.买，2.卖',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for bamboo_menu
@@ -57,7 +101,33 @@ CREATE TABLE `bamboo_role`  (
   `update_user` bigint(20) NULL DEFAULT NULL COMMENT '修改人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of bamboo_role
+-- ----------------------------
+INSERT INTO `bamboo_role` VALUES (3, '123', 0, '123', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `bamboo_role` VALUES (4, '0034350', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `bamboo_role` VALUES (5, '000564', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `bamboo_role` VALUES (6, '456', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `bamboo_role` VALUES (7, '46', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `bamboo_role` VALUES (8, '78', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `bamboo_role` VALUES (9, '000000768', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `bamboo_role` VALUES (10, '6786', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `bamboo_role` VALUES (11, '67856', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `bamboo_role` VALUES (12, '56', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `bamboo_role` VALUES (13, '000345', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `bamboo_role` VALUES (14, '64', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `bamboo_role` VALUES (15, '456', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `bamboo_role` VALUES (16, '4566', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `bamboo_role` VALUES (17, '7567567', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `bamboo_role` VALUES (18, '5645公司大', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `bamboo_role` VALUES (19, '42342', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `bamboo_role` VALUES (20, '3453453', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `bamboo_role` VALUES (21, '00867HD', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `bamboo_role` VALUES (22, 'HFGH4', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `bamboo_role` VALUES (23, '56745', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `bamboo_role` VALUES (24, '5675443', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for bamboo_role_menu
