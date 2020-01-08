@@ -14,6 +14,7 @@ import com.bamboo.exception.ServiceException;
 import com.bamboo.utils.CommonUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,7 +64,7 @@ public class RoleServiceImpl extends BaseService<RoleDao, Role> implements IRole
         List<GetRoleResponse> list = roleDao.list(request);
         PageInfo<GetRoleResponse> pageInfo = new PageInfo<GetRoleResponse>(list);
         result.setData(pageInfo.getList());
-        CommonUtil.setPage(result,pageInfo);
+//        CommonUtil.setPage(result,pageInfo);
         return new BaseResponse<>(result);
     }
 

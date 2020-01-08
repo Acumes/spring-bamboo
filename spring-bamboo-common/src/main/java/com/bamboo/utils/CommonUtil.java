@@ -239,18 +239,18 @@ public class CommonUtil {
         System.out.println(f.get(obj));
     }
 
-    public static void setPage(Object o, PageInfo page) {
-            // 获取obj类的字节文件对象
-        try {
-            BasePageResponse response = new BasePageResponse();
-            response.setPageNo(page.getPageNum());
-            response.setPageSize(page.getPageSize());
-            response.setTotal(page.getTotal());
-            BeanUtils.copyProperties(response,o);
-        }catch (Exception e){
-            log.error("设置分页数据失败");
-            log.error("====================================================");
-            log.error(e.getMessage());
-        }
-    }
+//    public static void setPage(Object o, PageInfo page) {
+//            // 获取obj类的字节文件对象
+//        try {
+//            BasePageResponse response = new BasePageResponse();
+//            response.setPageNo(page.getPageNum());
+//            response.setPageSize(page.getPageSize());
+//            response.setTotal(page.getTotal());
+//            BeanUtils.copyProperties(response,o);
+//        }catch (Exception e){
+//            log.error("设置分页数据失败");
+//            log.error("====================================================");
+//            log.error(e.getMessage());
+//        }
+//    }
 }

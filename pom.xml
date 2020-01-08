@@ -11,6 +11,7 @@
         <module>spring-bamboo-common</module>
         <module>spring-bamboo-web</module>
         <module>spring-bamboo-service</module>
+        <module>spring-bamboo-job</module>
     </modules>
     <packaging>pom</packaging>
     <parent>

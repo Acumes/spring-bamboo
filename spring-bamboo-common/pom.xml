@@ -99,6 +99,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-freemarker</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.kenai.nbpwr</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>1.6.2-201110292322</version>
+        </dependency>
 
     </dependencies>
 

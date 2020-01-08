@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bamboo.basicinformation.dao.BasicInformationDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.bamboo.basicinformation.entity.BasicInformation">
+        <id column="id" property="id" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="current_price" property="currentPrice" />
+        <result column="target_price" property="targetPrice" />
+        <result column="concept" property="concept" />
+    </resultMap>
+
+    <select id="getCodes" resultType="string">
+        SELECT GROUP_CONCAT(code separator ',') as codes FROM `bamboo_basic_information`
+    </select>
+    <select id="selectByCode" resultMap="BaseResultMap">
+        SELECT * FROM `bamboo_basic_information`
+        where code = #{code}
+    </select>
+
+</mapper>

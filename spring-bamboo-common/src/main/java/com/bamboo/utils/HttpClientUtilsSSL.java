@@ -1,7 +1,5 @@
 package com.bamboo.utils;
 
-import com.alibaba.fastjson.JSON;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.http.Consts;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
@@ -14,20 +12,17 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.springframework.util.StringUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Slf4j
 public class HttpClientUtilsSSL {
-	
+
 	/**
 	 * 发送post请求
 	 *
@@ -40,15 +35,9 @@ public class HttpClientUtilsSSL {
 	 */
 	public static String doPostRequest(String url, Map<String, String> header, Map<String, String> params,
                                        HttpEntity httpEntity, boolean containHeader) {
-		try{
-
-			log.info("HttpClientUtilsSSL>>doPostRequest信息：{URL:"+url+",params:【"+ JSON.toJSONString(httpEntity)+"】}");
-		}catch (Exception e){
-			log.error("https post请求格式化失败",e);
-		}
 		String resultStr = "";
 
-		if (StringUtils.isEmpty(url)) {
+		if (CommonUtil.isEmpty(url)) {
 			return resultStr;
 		}
 		CloseableHttpClient httpClient = null;
@@ -123,7 +112,7 @@ public class HttpClientUtilsSSL {
 
 	public static String doGetRequest(String url, Map<String, String> header, Map<String, String> params,boolean containHeader) {
 		String resultStr = "";
-		if (StringUtils.isEmpty(url)) {
+		if (CommonUtil.isEmpty(url)) {
 			return resultStr;
 		}
 		CloseableHttpClient httpClient = null;
@@ -136,7 +125,6 @@ public class HttpClientUtilsSSL {
 			if (!CommonUtil.isEmpty(params)) {
 				url = url + buildUrl(params);
 			}
-			log.info("HttpClientUtilsSSL>>doGetRequest信息：{URL:"+url);
 			HttpGet httpGet = new HttpGet(url);
 			RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(5000)// 连接超时
 					.setConnectionRequestTimeout(5000)// 请求超时
@@ -194,7 +182,7 @@ public class HttpClientUtilsSSL {
 	 * @return
 	 */
 	private static String buildUrl(Map<String, String> map) {
-		if (!CommonUtil.isEmpty(map)) {
+		if (CommonUtil.isEmpty(map)) {
 			return "";
 		}
 		StringBuffer stringBuffer = new StringBuffer("?");
@@ -207,35 +195,5 @@ public class HttpClientUtilsSSL {
 			result = result.substring(0, result.length() - 1);// 去掉结尾的&连接符
 		}
 		return result;
-	}
-
-
-
-
-	public static void main(String[] args) {
-		Map<String,String> postParam2= new HashMap<String, String>();
-  		postParam2.put("uid", "a69646bd0bc6f8f694278c3510013ce0");
-  		postParam2.put("platformType", "2");
-  		postParam2.put("payAmount", "0.72348045");
-  		postParam2.put("smsCode", "105394");
-  		postParam2.put("remark", "2");
-  		postParam2.put("payPassword", "123456");
-  		postParam2.put("sign","d37b1bc1a846d670056f0d4fe22b748d");
-  		
-        String httpsUrl = "https://main.t.youbank.top/api/pay";
-//        try {
-////			System.out.println(HttpClientUtilsSSL.doPostRawSSL(httpsUrl, postParam2, "5x2zu$!DBb4Z3b)1TscI#NUB2CGDygzTCY8tnfPy!L660Fy^!oxYxM]GYRtMx#AWHQ9w56!UD)CvCjn9", new SignYBT()));
-//		} catch (UnsupportedEncodingException e) {
-//			e.printStackTrace();
-//		}
-        
-        
-//        String httpsUrl = "https://main.youbank.top/api/send-smscode";
-//        
-//        Map<String,String> postParam2= new HashMap<String, String>();
-//    	postParam2.put("uid", "257b24b19c3ff0c43086ca0a22884e34");
-//    	postParam2.put("platformType", "2");
-//        
-//        System.out.println(HttpClientUtilsSSL.doPostRawSSL(httpsUrl, postParam2,"5x2zu$!DBb4Z3b)1TscI#NUB2CGDygzTCY8tnfPy!L660Fy^!oxYxM]GYRtMx#AWHQ9w56!UD)CvCjn9", new SignYBT()));
 	}
 }
