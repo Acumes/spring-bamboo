@@ -34,7 +34,7 @@ public class SecureUtil {
         User user = new User();
         Long userId = (Long) claims.get("userId");
         String userName = (String) claims.get("userName");
-        Long roleId = (Long) claims.get("roleId");
+        Long roleId = Long.valueOf((Integer) claims.get("roleId"));
         String mobile = (String) claims.get("mobile");
         String account = (String) claims.get("account");
         user.setId(userId);

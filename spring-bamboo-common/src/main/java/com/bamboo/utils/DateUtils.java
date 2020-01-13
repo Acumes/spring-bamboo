@@ -22,6 +22,7 @@ public class DateUtils {
         return currentTime_2;
     }
 
+
     /**
      * 获取现在时间 毫秒級別
      *
@@ -41,6 +42,17 @@ public class DateUtils {
      */
     public static Date getDateMillisecond(String dateStr) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date dateString = formatter.parse(dateStr);
+        return dateString;
+    }
+
+    /**
+     * 获取现在时间 毫秒級別
+     *
+     * @return 返回时间类型 yyyy-MM-dd HH:mm:ss S
+     */
+    public static Date getDateMillisecond2222(String dateStr) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date dateString = formatter.parse(dateStr);
         return dateString;
     }

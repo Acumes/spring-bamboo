@@ -1,28 +1,22 @@
 package com.bamboo.common.menu.vo.response;
 
 import com.bamboo.utils.list.INode;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import io.swagger.annotations.ApiModel;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author: acumes
- * @create: 2019-11-08 18:13:42
+ * @create: 2020-01-13 14:00:10
  * @description:
  */
 @Data
-@ApiModel
-public class GetMenuResponse  {
+public class MenuVoResponse implements INode {
     @ApiModelProperty(value = "主键")
     private Integer id;
-    @ApiModelProperty(value = "主键")
-    private Integer value;
-    @ApiModelProperty(value = "主键")
-    private Integer key;
 
     @ApiModelProperty(value = "父级菜单")
     private Integer parentId;
@@ -59,8 +53,17 @@ public class GetMenuResponse  {
     @ApiModelProperty(value = "备注")
     private String remark;
 
-    @ApiModelProperty(value = "children")
-    private List<GetMenuResponse> children;
-    @ApiModelProperty(value = "butons")
-    private List<GetMenuResponse> buttons;
+    /**
+     * 子孙节点
+     */
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private List<INode> children;
+
+    @Override
+    public List<INode> getChildren() {
+        if (this.children == null) {
+            this.children = new ArrayList<>();
+        }
+        return this.children;
+    }
 }

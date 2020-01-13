@@ -78,40 +78,69 @@ public class SharesScheduling {
 //            }else{
 //                color = "\033[32;4m";
 //            }
-                basicInformation.setCurrentPrice(new BigDecimal(split1[3]));
-
+                BigDecimal currentPrice = new BigDecimal(split1[3]);
                 insertInfo.setYesterdayClosingPrice(new BigDecimal(split1[2]));
                 insertInfo.setCode(code1);
                 insertInfo.setCreateTime(new Date());
                 insertInfo.setName(name);
-                insertInfo.setCurrentPrice(new BigDecimal(split1[3]));
+                insertInfo.setCurrentPrice(currentPrice);
                 insertInfo.setOpeningPrice(new BigDecimal(split1[1]));
                 insertInfo.setRate(new BigDecimal(bili.toString()));
                 insertInfo.setTransactionNumber(new Integer(split1[8]));
                 insertInfo.setTurnoverAmount(new BigDecimal(split1[9]));
                 insertInfo.setHighestPrice(new BigDecimal(split1[4]));
                 insertInfo.setMinimumPrice(new BigDecimal(split1[5]));
+
                 if(CommonUtil.isEmpty(informationHistory)){
-                    insertInfo.setCurrentTransactionNumber(insertInfo.getTransactionNumber());
+                    insertInfo.setCurrentTransactionNumber(insertInfo.getTransactionNumber()/100);
                     insertInfo.setCurrentTurnoverAmount(insertInfo.getTurnoverAmount());
                     insertInfo.setTradingType("1");
                 }else{
 
                     //当前价与买一价对比
+                    if(informationHistory.getCurrentPrice().compareTo(currentPrice) >= 1){
+                        insertInfo.setTradingType("1");
+                    }else{
 
-                    insertInfo.setCurrentTransactionNumber(insertInfo.getTransactionNumber()-informationHistory.getTransactionNumber());
+                        if(currentPrice.compareTo(new BigDecimal(split1[21])) >= 0){
+                            if(currentPrice.compareTo(informationHistory.getCurrentPrice()) == 0){
+                                if(currentPrice.compareTo(new BigDecimal(split1[11])) > 0){
+                                    insertInfo.setTradingType("1");
+                                }else{
+                                    insertInfo.setTradingType("2");
+                                }
+                            }else{
+                                insertInfo.setTradingType("1");
+                            }
+                        }else{
+                            insertInfo.setTradingType("2");
+                        }
+                    }
+
+                    insertInfo.setCurrentTransactionNumber((insertInfo.getTransactionNumber()-informationHistory.getTransactionNumber())/100);
                     insertInfo.setCurrentTurnoverAmount(insertInfo.getTurnoverAmount().subtract(informationHistory.getTurnoverAmount()));
 //                    if(insertInfo.getCurrentPrice().compareTo(informationHistory.getCurrentPrice()))
 //                insertInfo.setTransactionNumber(new Integer(split1[8])-informationHistory.getTransactionNumber());
 //                insertInfo.setTurnoverAmount(new BigDecimal(split1[9]).subtract(informationHistory.getTurnoverAmount()));
                 }
-                informationHistories.add(insertInfo);
-                basicInformations.add(basicInformation);
+                if(insertInfo.getCurrentTransactionNumber() > 0){
+
+                    informationHistories.add(insertInfo);
+                }
+                if(currentPrice.compareTo(basicInformation.getCurrentPrice()) != 0){
+                    basicInformation.setCurrentPrice(currentPrice);
+                    basicInformations.add(basicInformation);
+                }
 //            System.out.println(color+ name + " 开盘价：" + split1[1] + " 昨收：" + split1[2] + " 当前价格：" + split1[3]+ " 比例:"+ bili.toString() + "% 今高：" + split1[4] + " 今低："+ split1[5] +
 //                    "交易额:" + split1[9]+ "交易数量："+ split1[8]+ "\033[0m");
             }
-            basicInformationService.updateBatchById(basicInformations);
-            informationHistoryService.saveBatch(informationHistories);
+            if(!CommonUtil.isEmpty(basicInformations)){
+                basicInformationService.updateBatchById(basicInformations);
+            }
+            if(!CommonUtil.isEmpty(informationHistories)){
+                informationHistoryService.saveBatch(informationHistories);
+            }
+
         }
     }
 

@@ -5,6 +5,7 @@ import com.bamboo.base.Service;
 import com.bamboo.common.menu.entity.Menu;
 import com.bamboo.common.menu.vo.request.OperationMenuRequest;
 import com.bamboo.common.menu.vo.response.GetMenuResponse;
+import com.bamboo.common.menu.vo.response.MenuVoResponse;
 
 import java.util.List;
 
@@ -43,4 +44,17 @@ public interface IMenuService extends Service<Menu> {
      * @return
      */
     List<GetMenuResponse> routes();
+
+    /**
+     * 前端按钮数据
+     * @return
+     */
+    List<GetMenuResponse> buttons();
+
+    /**
+     * 查询列表
+     * @param request
+     * @return
+     */
+    List<MenuVoResponse> getList(OperationMenuRequest request);
 }

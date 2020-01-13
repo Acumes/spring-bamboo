@@ -7,8 +7,10 @@ import com.bamboo.common.menu.entity.Menu;
 import com.bamboo.common.menu.service.IMenuService;
 import com.bamboo.common.menu.vo.request.OperationMenuRequest;
 import com.bamboo.common.menu.vo.response.GetMenuResponse;
+import com.bamboo.common.menu.vo.response.MenuVoResponse;
 import com.bamboo.exception.ServiceException;
 import com.bamboo.utils.CommonUtil;
+import com.bamboo.utils.list.ForestNodeMerger;
 import com.baomidou.mybatisplus.extension.api.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -18,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.locks.Condition;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -55,6 +59,13 @@ public class MenuController {
         boolean b = menuService.removeById(id);
         return new BaseResponse("删除成功");
     }
+    @ApiOperation(value = "菜单列表")
+    @PostMapping(value = "list")
+    @ApiOperationSupport(order = 3)
+    public BaseResponse<List<MenuVoResponse>> list(@RequestBody OperationMenuRequest request){
+        List<MenuVoResponse> list = menuService.getList(request);
+        return new BaseResponse(ForestNodeMerger.merge(list));
+    }
     @ApiOperation(value = "查看菜单")
     @GetMapping(value = "detail/{id}")
     @ApiOperationSupport(order = 4)
@@ -71,7 +82,7 @@ public class MenuController {
     @ApiOperation(value = "获取菜单树")
     @GetMapping(value = "tree")
     @ApiOperationSupport(order = 5)
-    public BaseResponse<List<GetMenuResponse>> tree(@PathVariable String id){
+    public BaseResponse<List<GetMenuResponse>> tree(){
         return menuService.tree();
     }
 
@@ -89,13 +100,13 @@ public class MenuController {
     /**
      * 前端按钮数据
      */
-//    @GetMapping("/buttons")
-//    @ApiOperationSupport(order = 7)
-//    @ApiOperation(value = "前端按钮数据", notes = "前端按钮数据")
-//    public R<List<MenuVO>> buttons(BladeUser user) {
-//        List<MenuVO> list = menuService.buttons(user.getRoleId());
-//        return R.data(list);
-//    }
+    @GetMapping("/buttons")
+    @ApiOperationSupport(order = 7)
+    @ApiOperation(value = "前端按钮数据", notes = "前端按钮数据")
+    public BaseResponse<List<GetMenuResponse>> buttons() {
+        List<GetMenuResponse> list = menuService.buttons();
+        return new BaseResponse(list);
+    }
 
 
 

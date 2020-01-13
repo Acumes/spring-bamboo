@@ -9,6 +9,7 @@ import com.bamboo.common.menu.service.IMenuService;
 import com.bamboo.common.menu.vo.request.GetMenuRequest;
 import com.bamboo.common.menu.vo.request.OperationMenuRequest;
 import com.bamboo.common.menu.vo.response.GetMenuResponse;
+import com.bamboo.common.menu.vo.response.MenuVoResponse;
 import com.bamboo.common.role.vo.response.PermissionResponse;
 import com.bamboo.common.user.entity.User;
 import com.bamboo.exception.ServiceException;
@@ -76,11 +77,39 @@ public class MenuServiceImpl extends BaseService<MenuDao, Menu> implements IMenu
         return parentIds;
     }
 
+    @Override
+    public List<GetMenuResponse> buttons() {
+        List<GetMenuResponse> parentIds = menuDao.buttons();
+        this.getButton(parentIds);
+        return parentIds;
+    }
+
+    @Override
+    public List<MenuVoResponse> getList(OperationMenuRequest request) {
+        return menuDao.getList(request);
+    }
+
+    private void getButton(List<GetMenuResponse> parentIds) {
+        if(!CommonUtil.isEmpty(parentIds)){
+            for(GetMenuResponse permis : parentIds){
+                GetMenuRequest permissionReq = new GetMenuRequest();
+                permissionReq.setParentId(permis.getId());
+
+                List<GetMenuResponse> permissionList = menuDao.getTree(permissionReq);
+                if(!CommonUtil.isEmpty(permissionList)) {
+                    this.getButton(permissionList);
+                    permis.setChildren(permissionList);
+                }
+            }
+        }
+    }
+
     private void getChildrens(List<GetMenuResponse> list,Boolean isShowButton) {
         if(!CommonUtil.isEmpty(list)){
             for(GetMenuResponse permis : list){
                 GetMenuRequest permissionReq = new GetMenuRequest();
-                permissionReq.setParentId(permis.getParentId());
+                permissionReq.setParentId(permis.getId());
+
                 List<GetMenuResponse> permissionList = menuDao.getTree(permissionReq);
                 if(!CommonUtil.isEmpty(permissionList)) {
                     this.getChildrens(permissionList,isShowButton);

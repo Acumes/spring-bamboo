@@ -15,6 +15,8 @@ import java.util.List;
 @ApiModel
 public class GetMenuRequest {
 
+    @ApiModelProperty(value = "主键> 新增不需要传，修改需要传")
+    private Integer id;
 
     @ApiModelProperty(value = "父级菜单")
     private Integer parentId;
