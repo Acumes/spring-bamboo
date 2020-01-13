@@ -20,4 +20,16 @@
         where code = #{code}
     </select>
 
+    <select id="getList" resultMap="BaseResultMap">
+        SELECT * FROM bamboo_basic_information
+        <where>
+            <if test="name != null and name != ''">
+                AND name like CONCAT('%',#{name},'%')
+            </if>
+            <if test="code != null and code != ''">
+                AND code like CONCAT('%',#{code},'%')
+            </if>
+        </where>
+    </select>
+
 </mapper>

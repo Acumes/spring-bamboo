@@ -1,7 +1,11 @@
 package com.bamboo.basicinformation.service;
 
 import com.bamboo.basicinformation.entity.BasicInformation;
+import com.bamboo.basicinformation.vo.request.BasicInformationRequest;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.github.pagehelper.PageInfo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -20,4 +24,12 @@ public interface IBasicInformationService extends IService<BasicInformation> {
     String getCodes();
 
     BasicInformation selectByCode(String code1);
+
+    /**
+     * 获取列表
+     * @return
+     */
+    PageInfo<BasicInformation> getList(BasicInformationRequest request);
+
+    void add(BasicInformationRequest request);
 }

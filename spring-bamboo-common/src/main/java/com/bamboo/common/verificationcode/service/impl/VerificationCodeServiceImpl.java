@@ -53,7 +53,7 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
 
         if(a == 0){
             String publicity = CommonUtil.getPublicity(null);
-            String publicityShow = publicity + "=";
+            String publicityShow = publicity + "=?";
             int codeX = width / (publicityShow.length() + 1);
             for(int i=0; i< publicityShow.length(); i++){
                 g.setColor(getRandColor(100, 150));// 调用函数出来的颜色相同

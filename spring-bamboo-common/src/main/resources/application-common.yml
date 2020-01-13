@@ -21,6 +21,8 @@ server:
     active: dev
 
 spring:
+  main:
+    allow-bean-definition-overriding: true
   profiles:
     active: dev
   #  mail:

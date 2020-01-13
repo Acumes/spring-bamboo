@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class BasePageRequest {
     @ApiModelProperty(value = "单页数据大小,默认<span style=\"color:red;\">20</span>最大<span style=\"color:red;\">100条</span>")
-    private Integer pageSize = 20;
+    private Integer pageSize = 10;
     @ApiModelProperty("页码，默认<span style=\"color:red;\">1</span>")
     private Integer pageNo = 1;
 

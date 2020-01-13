@@ -1,8 +1,11 @@
 package com.bamboo.basicinformation.dao;
 
 import com.bamboo.basicinformation.entity.BasicInformation;
+import com.bamboo.basicinformation.vo.request.BasicInformationRequest;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -17,4 +20,11 @@ public interface BasicInformationDao extends BaseMapper<BasicInformation> {
     String getCodes();
 
     BasicInformation selectByCode(@Param("code") String code);
+
+    /**
+     * 查询列表
+     * @param request
+     * @return
+     */
+    List<BasicInformation> getList(BasicInformationRequest request);
 }
