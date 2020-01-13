@@ -42,7 +42,7 @@ public class SharesScheduling {
         //
         Long timeMillis = System.currentTimeMillis();
         Long startTime = DateUtils.getDateMillisecond(DateUtils.getStringDateShort() + " 09:29:53").getTime();
-        Long endTime = DateUtils.getDateMillisecond(DateUtils.getStringDateShort() + " 15:00:02").getTime();
+        Long endTime = DateUtils.getDateMillisecond(DateUtils.getStringDateShort() + " 15:00:05").getTime();
         if(timeMillis.longValue() >startTime.longValue() && timeMillis.longValue()  < endTime){
             log.info("=====>>>>>开始查  {}", System.currentTimeMillis());
             System.out.println(basicInformationService.getCodes());
