@@ -69,6 +69,10 @@ public class InformationHistory extends Model<InformationHistory> {
     private Integer transactionNumber;
     @ApiModelProperty(value = "买卖类型")
     private String tradingType;
+    @ApiModelProperty(value = "买一")
+    private BigDecimal buyOne;
+    @ApiModelProperty(value = "卖一")
+    private BigDecimal sellOne;
 
     @ApiModelProperty(value = "创建时间")
     private Date createTime;

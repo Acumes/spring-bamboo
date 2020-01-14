@@ -20,6 +20,8 @@
         <result column="transaction_number" property="transactionNumber" />
         <result column="trading_type" property="tradingType" />
         <result column="create_time" property="createTime" />
+        <result column="buy_one" property="buyOne" />
+        <result column="sell_one" property="sellOne" />
     </resultMap>
 
     <select id="selectByCode" resultMap="BaseResultMap">

@@ -42,7 +42,7 @@ public class SharesScheduling {
         //
         Long timeMillis = System.currentTimeMillis();
         Long startTime = DateUtils.getDateMillisecond(DateUtils.getStringDateShort() + " 09:29:53").getTime();
-        Long endTime = DateUtils.getDateMillisecond(DateUtils.getStringDateShort() + " 15:00:05").getTime();
+        Long endTime = DateUtils.getDateMillisecond(DateUtils.getStringDateShort() + " 15:10:05").getTime();
         if(timeMillis.longValue() >startTime.longValue() && timeMillis.longValue()  < endTime){
             log.info("=====>>>>>开始查  {}", System.currentTimeMillis());
             System.out.println(basicInformationService.getCodes());
@@ -90,7 +90,8 @@ public class SharesScheduling {
                 insertInfo.setTurnoverAmount(new BigDecimal(split1[9]));
                 insertInfo.setHighestPrice(new BigDecimal(split1[4]));
                 insertInfo.setMinimumPrice(new BigDecimal(split1[5]));
-
+                insertInfo.setBuyOne(new BigDecimal(split1[11]));
+                insertInfo.setSellOne(new BigDecimal(split1[21]));
                 if(CommonUtil.isEmpty(informationHistory)){
                     insertInfo.setCurrentTransactionNumber(insertInfo.getTransactionNumber()/100);
                     insertInfo.setCurrentTurnoverAmount(insertInfo.getTurnoverAmount());
