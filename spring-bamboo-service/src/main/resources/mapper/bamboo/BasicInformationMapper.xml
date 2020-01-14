@@ -10,6 +10,7 @@
         <result column="current_price" property="currentPrice" />
         <result column="target_price" property="targetPrice" />
         <result column="concept" property="concept" />
+        <result column="remark" property="remark" />
     </resultMap>
 
     <select id="getCodes" resultType="string">

@@ -46,6 +46,8 @@ public class BasicInformation extends Model<BasicInformation> {
 
     @ApiModelProperty(value = "概念")
     private String concept;
+    @ApiModelProperty(value = "备注")
+    private String remark;
 
 
     @Override
