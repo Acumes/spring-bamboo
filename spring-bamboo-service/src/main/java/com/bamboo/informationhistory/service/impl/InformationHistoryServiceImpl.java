@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务实现类
@@ -24,5 +26,10 @@ public class InformationHistoryServiceImpl extends ServiceImpl<InformationHistor
     @Override
     public InformationHistory selectByCode(String code) {
         return informationHistoryDao.selectByCode(code);
+    }
+
+    @Override
+    public List<InformationHistory> selectByCodes(List<String> split) {
+        return informationHistoryDao.selectByCodes(split);
     }
 }

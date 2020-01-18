@@ -17,7 +17,7 @@ import java.util.List;
  */
 public interface BasicInformationDao extends BaseMapper<BasicInformation> {
 
-    String getCodes();
+    List<BasicInformation> getCodes();
 
     BasicInformation selectByCode(@Param("code") String code);
 

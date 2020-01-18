@@ -13,8 +13,11 @@
         <result column="remark" property="remark" />
     </resultMap>
 
-    <select id="getCodes" resultType="string">
-        SELECT GROUP_CONCAT(code separator ',') as codes FROM `bamboo_basic_information`
+<!--    <select id="getCodes" resultType="string">-->
+<!--        SELECT GROUP_CONCAT(code separator ',') as codes FROM `bamboo_basic_information`-->
+<!--    </select>-->
+    <select id="getCodes" resultMap="BaseResultMap">
+        SELECT *  FROM `bamboo_basic_information`
     </select>
     <select id="selectByCode" resultMap="BaseResultMap">
         SELECT * FROM `bamboo_basic_information`

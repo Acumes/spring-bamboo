@@ -76,6 +76,8 @@ public class InformationHistory extends Model<InformationHistory> {
 
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
+    @ApiModelProperty(value = "创建时间")
+    private Long createTimeStamp;
 
 
     @Override

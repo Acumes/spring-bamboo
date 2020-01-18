@@ -4,24 +4,24 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.bamboo.informationhistory.entity.InformationHistory">
-        <id column="id" property="id" />
-        <result column="code" property="code" />
-        <result column="name" property="name" />
-        <result column="opening_price" property="openingPrice" />
-        <result column="highest_price" property="highestPrice" />
-        <result column="minimum_price" property="minimumPrice" />
-        <result column="current_price" property="currentPrice" />
-        <result column="yesterday_closing_price" property="yesterdayClosingPrice" />
-        <result column="closing_price" property="closingPrice" />
-        <result column="rate" property="rate" />
-        <result column="current_turnover_amount" property="currentTurnoverAmount" />
-        <result column="turnover_amount" property="turnoverAmount" />
-        <result column="current_transaction_number" property="currentTransactionNumber" />
-        <result column="transaction_number" property="transactionNumber" />
-        <result column="trading_type" property="tradingType" />
-        <result column="create_time" property="createTime" />
-        <result column="buy_one" property="buyOne" />
-        <result column="sell_one" property="sellOne" />
+        <id column="id" property="id"/>
+        <result column="code" property="code"/>
+        <result column="name" property="name"/>
+        <result column="opening_price" property="openingPrice"/>
+        <result column="highest_price" property="highestPrice"/>
+        <result column="minimum_price" property="minimumPrice"/>
+        <result column="current_price" property="currentPrice"/>
+        <result column="yesterday_closing_price" property="yesterdayClosingPrice"/>
+        <result column="closing_price" property="closingPrice"/>
+        <result column="rate" property="rate"/>
+        <result column="current_turnover_amount" property="currentTurnoverAmount"/>
+        <result column="turnover_amount" property="turnoverAmount"/>
+        <result column="current_transaction_number" property="currentTransactionNumber"/>
+        <result column="transaction_number" property="transactionNumber"/>
+        <result column="trading_type" property="tradingType"/>
+        <result column="create_time" property="createTime"/>
+        <result column="buy_one" property="buyOne"/>
+        <result column="sell_one" property="sellOne"/>
     </resultMap>
 
     <select id="selectByCode" resultMap="BaseResultMap">
@@ -30,6 +30,19 @@
         where code = #{code} AND DATE_FORMAT( create_time, '%Y-%m-%d' ) = DATE_FORMAT( now(), '%Y-%m-%d' )
         ORDER BY create_time desc
         limit 1
+    </select>
+
+    <select id="selectByCodes" resultMap="BaseResultMap">
+        select * from  bamboo_information_history
+        where code in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        and create_time_stamp = (select max(create_time_stamp) from bamboo_information_history)
+        group by code
+        order by create_time asc
+
+
     </select>
 
 </mapper>

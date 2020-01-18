@@ -21,7 +21,7 @@ public interface IBasicInformationService extends IService<BasicInformation> {
      * 获取所有编码
      * @return
      */
-    String getCodes();
+    List<BasicInformation> getCodes();
 
     BasicInformation selectByCode(String code1);
 

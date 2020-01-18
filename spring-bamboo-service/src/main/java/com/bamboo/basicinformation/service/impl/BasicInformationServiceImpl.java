@@ -28,7 +28,7 @@ public class BasicInformationServiceImpl extends ServiceImpl<BasicInformationDao
     private BasicInformationDao basicInformationDao;
 
     @Override
-    public String getCodes() {
+    public List<BasicInformation> getCodes() {
         return basicInformationDao.getCodes();
     }
 
