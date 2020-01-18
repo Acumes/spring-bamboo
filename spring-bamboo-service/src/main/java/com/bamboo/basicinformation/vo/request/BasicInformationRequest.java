@@ -12,4 +12,5 @@ public class BasicInformationRequest extends BasePageRequest {
     private BigDecimal currentPrice;
     private BigDecimal targetPrice;
     private String concept;
+    private String remark;
 }
