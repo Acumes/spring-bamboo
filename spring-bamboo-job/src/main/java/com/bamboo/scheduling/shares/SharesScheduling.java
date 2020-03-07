@@ -43,23 +43,26 @@ public class SharesScheduling {
     public void userWithdrawErrorOrFault() throws Exception {
         //
         Long timeMillis = System.currentTimeMillis();
-        Long startTime = DateUtils.getDateMillisecond(DateUtils.getStringDateShort() + " 09:29:53").getTime();
-        Long endTime = DateUtils.getDateMillisecond(DateUtils.getStringDateShort() + " 23:59:05").getTime();
+        Long startTime = DateUtils.getDateMillisecond(DateUtils.getStringDateShort() + " 09:25:53").getTime();
+        Long endTime = DateUtils.getDateMillisecond(DateUtils.getStringDateShort() + " 15:10:05").getTime();
         Date now = new Date();
         if(timeMillis.longValue() >startTime.longValue() && timeMillis.longValue()  < endTime){
             log.info("=====>>>>>开始查  {}", System.currentTimeMillis());
             List<BasicInformation> basicInformationList = basicInformationService.getCodes();
             List<String> codes = basicInformationList.stream().map(BasicInformation::getCode).collect(Collectors.toList());
             List<InformationHistory> histories = informationHistoryService.selectByCodes(codes);
-            String url = "http://hq.sinajs.cn/list="+codes.stream().collect(Collectors.joining(","));;
+            if(histories.size() < basicInformationList.size()){
+                //判断少了哪个,查询出来
 
+            }
+            String url = "http://hq.sinajs.cn/list="+codes.stream().collect(Collectors.joining(","));
             String body = HttpClientUtilsSSL.doGetRequest(url,null,null,false);
             String[] split = body.split(";");
             List<InformationHistory> informationHistories = new ArrayList<>();
             List<BasicInformation> basicInformations = new ArrayList<>();
-            InformationHistory informationHistory = null;
             BasicInformation basicInformation = null;
             for (String s : split){
+                InformationHistory informationHistory = null;
                 if("\n".equalsIgnoreCase(s)){
                     continue;
                 }
@@ -81,6 +84,12 @@ public class SharesScheduling {
                         informationHistory = history;
                         isExist = true;
                     }
+                }
+                if(isExist){
+                    //判断交易额是否一样，如果一样 不插入历史表
+//                    if(new BigDecimal(split1[9]).compareTo(informationHistory.getTurnoverAmount()) == 0){
+//                        continue;
+//                    }
                 }
                 BigDecimal s1 = new BigDecimal(split1[2]);
 
@@ -113,6 +122,11 @@ public class SharesScheduling {
         insertInfo.setName(name);
         insertInfo.setCurrentPrice(currentPrice);
         insertInfo.setOpeningPrice(new BigDecimal(split1[1]));
+        if("sz000735".equalsIgnoreCase(code1)){
+            if(bili.abs().compareTo(new BigDecimal("4.5")) >= 0){
+                CommonUtil.openLiulanqi();
+            }
+        }
         insertInfo.setRate(new BigDecimal(bili.toString()));
         insertInfo.setTransactionNumber(new Integer(split1[8]));
         insertInfo.setTurnoverAmount(new BigDecimal(split1[9]));
@@ -150,14 +164,58 @@ public class SharesScheduling {
             insertInfo.setCurrentTransactionNumber((insertInfo.getTransactionNumber()-informationHistory.getTransactionNumber())/100);
             insertInfo.setCurrentTurnoverAmount(insertInfo.getTurnoverAmount().subtract(informationHistory.getTurnoverAmount()));
         }
-        if(insertInfo.getCurrentTransactionNumber() > 0){
-            informationHistories.add(insertInfo);
-        }
+//        if(insertInfo.getCurrentTransactionNumber() > 0){
+        informationHistories.add(insertInfo);
+//        }
         if(currentPrice.compareTo(basicInformation.getCurrentPrice()) != 0){
             basicInformation.setCurrentPrice(currentPrice);
             basicInformations.add(basicInformation);
         }
         return null;
+    }
+
+    @Scheduled(cron = "0 30 15 * * ? ") // 每分钟
+//    @Scheduled(cron = "*/10 * * * * ? ") // 每分钟
+    public void test(){
+        log.info("=======================================");
+        log.info("开始清理为0的数据");
+        informationHistoryService.delTurnoverZero();
+        //添加一条当前时间的
+
+        List<BasicInformation> basicInformationList = basicInformationService.getCodes();
+        List<InformationHistory> informationHistories = new ArrayList<>();
+        Date now = new Date();
+        for(BasicInformation basicInformation : basicInformationList){
+            InformationHistory informationHistory = new InformationHistory();
+            informationHistory.setCode(basicInformation.getCode());
+            informationHistory.setName(basicInformation.getName());
+
+            informationHistory.setClosingPrice(basicInformation.getCurrentPrice());
+            informationHistory.setOpeningPrice(basicInformation.getCurrentPrice());
+            informationHistory.setHighestPrice(basicInformation.getCurrentPrice());
+            informationHistory.setMinimumPrice(basicInformation.getCurrentPrice());
+            informationHistory.setCurrentPrice(basicInformation.getCurrentPrice());
+            informationHistory.setYesterdayClosingPrice(basicInformation.getCurrentPrice());
+
+            informationHistory.setRate(BigDecimal.ZERO);
+            informationHistory.setCurrentTurnoverAmount(BigDecimal.ZERO);
+            informationHistory.setCurrentTransactionNumber(0);
+            informationHistory.setTransactionNumber(0);
+            informationHistory.setTurnoverAmount(BigDecimal.ZERO);
+
+
+            informationHistory.setTradingType("1");
+            informationHistory.setCreateTime(now);
+            informationHistory.setCreateTimeStamp(now.getTime());
+
+            informationHistories.add(informationHistory);
+        }
+
+        informationHistoryService.saveBatch(informationHistories);
+    }
+
+    public static void main(String[] args) {
+        CommonUtil.openLiulanqi();
     }
 
 }

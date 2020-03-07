@@ -25,32 +25,32 @@ spring:
     allow-bean-definition-overriding: true
   profiles:
     active: dev
-  #  mail:
-  #    username: 295277302@qq.com
-  #    host: smtp.exmail.qq.com
-  #    password: uqohxpwwbiqucahj
-  #    properties:
-  #      mail:
-  #        smtp:
-  #          auth: true
-  #          starttls:
-  #            enable: true
-  #            required: true
   mail:
+    username: 295277302@qq.com
     host: smtp.exmail.qq.com
-    protocol: smtp
-    port: 465
-    username: systemos@grandhelmsman.com #邮箱地址
-    password: Zdzadmin-2019 #邮箱密码
+    password: uqohxpwwbiqucahj
     properties:
       mail:
         smtp:
           auth: true
-          ssl:
+          starttls:
             enable: true
-            socketFactory:
-              class: com.sun.mail.util.MailSSLSocketFactory
-              fallback: false
+            required: true
+#  mail:
+#    host: smtp.exmail.qq.com
+#    protocol: smtp
+#    port: 465
+#    username: systemos@grandhelmsman.com #邮箱地址
+#    password: Zdzadmin-2019 #邮箱密码
+#    properties:
+#      mail:
+#        smtp:
+#          auth: true
+#          ssl:
+#            enable: true
+#            socketFactory:
+#              class: com.sun.mail.util.MailSSLSocketFactory
+#              fallback: false
 
 
 #pagehelper分页插件配置

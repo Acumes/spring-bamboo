@@ -17,9 +17,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author: acumes
@@ -38,33 +37,35 @@ public class Tsdf {
 //    @Scheduled(cron = "0/10 * *  * * ? ") // 每分钟
     public void test() throws FileNotFoundException {
 //        List<Yinpin> list1 = yinpinService.list();
-        List<Peitu> list1 = iPeituService.list();
-        if(!CommonUtil.isEmpty(list1)){
-            System.out.println("=========>>>>>>");
-        }else{
-            List<File> list = new ArrayList<>();
-            getAllFileName("F:\\zxh\\shangchuan",list);
-//            List<Yinpin> list2 = new ArrayList<>();
-            List<Peitu> list2 = new ArrayList<>();
-            for (int i = 0; i < list.size(); i++) {
-                if (list.get(i).isFile()) {
-                    String columns[] = {"title", "small_title", "xuance", "daan", "yinpin", "peitu"};
-                    // 获取文件名
-                    String fileName = list.get(i).getName();
-                    // 获取文件的后缀名
-                    String suffixName = fileName.substring(fileName.lastIndexOf("."));
-                    InputStream inputStream = new FileInputStream(list.get(i));
-                    if(!"【总】沪教版-导入系统格式".equalsIgnoreCase(fileName)){
-                        List<Map<String, String>> excelList = Excel2Util.excelList(inputStream, fileName, columns);
-                        System.out.println("文件：" + fileName);
-                        installPeiTu(excelList,list2,fileName);
-                        iPeituService.saveBatch(list2);
-                    }
-//                    installYinPin(excelList,list2,fileName);
-//                    yinpinService.saveBatch(list2);
-                }
-            }
-        }
+//        List<Peitu> list1 = iPeituService.list();
+//        if(!CommonUtil.isEmpty(list1)){
+//            System.out.println("=========>>>>>>");
+//        }else{
+//            List<File> list = new ArrayList<>();
+//            getAllFileName("F:\\zxh\\shangchuan",list);
+////            List<Yinpin> list2 = new ArrayList<>();
+//            List<Peitu> list2 = new ArrayList<>();
+//            for (int i = 0; i < list.size(); i++) {
+//                if (list.get(i).isFile()) {
+//                    String columns[] = {"title", "small_title", "xuance", "daan", "yinpin", "peitu"};
+//                    // 获取文件名
+//                    String fileName = list.get(i).getName();
+//                    // 获取文件的后缀名
+//                    String suffixName = fileName.substring(fileName.lastIndexOf("."));
+//                    InputStream inputStream = new FileInputStream(list.get(i));
+//                    if(!"【总】沪教版-导入系统格式".equalsIgnoreCase(fileName)){
+//                        List<Map<String, String>> excelList = Excel2Util.excelList(inputStream, fileName, columns);
+//                        System.out.println("文件：" + fileName);
+//                        installPeiTu(excelList,list2,fileName);
+//                        iPeituService.saveBatch(list2);
+//                    }
+////                    installYinPin(excelList,list2,fileName);
+////                    yinpinService.saveBatch(list2);
+//                }
+//            }
+//        }
+
+
 
     }
 
@@ -124,6 +125,15 @@ public class Tsdf {
                 getAllFileName(tempList[i].getAbsolutePath(),fileNameList);
             }
         }
+    }
+
+    public static void main(String[] args) {
+//        CommonUtil.openLiulanqi();
+        List<Integer> a = Arrays.asList(1,4,7,43,23,42,541,234,46);
+        System.out.println(a);
+        a=a.stream().sorted().collect(Collectors.toList());
+        System.out.println(a);
+
     }
 
 }

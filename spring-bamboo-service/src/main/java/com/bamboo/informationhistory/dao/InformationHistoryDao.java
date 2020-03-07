@@ -19,4 +19,6 @@ public interface InformationHistoryDao extends BaseMapper<InformationHistory> {
     InformationHistory selectByCode(@Param("code") String code);
 
     List<InformationHistory> selectByCodes(@Param("list") List<String> split);
+
+    void delTurnoverZero();
 }

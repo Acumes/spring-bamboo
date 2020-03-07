@@ -1,22 +1,28 @@
 spring:
   profiles:
     include: common
+  thymeleaf:
+    suffix: .html
+    mode: HTML5
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
 #----------------------------------------------- dev -------------------------------------------------------------
 ---
 spring:
   profiles: dev
 
   datasource:
-    url: jdbc:mysql://192.168.1.74:3306/bamboo?useUnicode=true&allowPublicKeyRetrieval=true&useSSL=false&allowMultiQueries=true&serverTimezone=GMT%2B8
+    url: jdbc:mysql://192.168.1.105:3306/bamboo?useUnicode=true&allowPublicKeyRetrieval=true&useSSL=false&allowMultiQueries=true&serverTimezone=GMT%2B8
     username: root
-    password: 123456
+    password: 123!@#QWE
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   redis:
-    password: 123456
+    password: 123!@#QWE
     database: 0
     port: 6379
-    host: 192.168.1.74
+    host: 192.168.1.105
     timeout: 1000
 
 http:

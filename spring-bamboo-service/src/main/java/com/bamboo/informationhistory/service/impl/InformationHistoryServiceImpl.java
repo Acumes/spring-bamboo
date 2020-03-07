@@ -32,4 +32,9 @@ public class InformationHistoryServiceImpl extends ServiceImpl<InformationHistor
     public List<InformationHistory> selectByCodes(List<String> split) {
         return informationHistoryDao.selectByCodes(split);
     }
+
+    @Override
+    public void delTurnoverZero() {
+        informationHistoryDao.delTurnoverZero();
+    }
 }

@@ -19,4 +19,6 @@ public interface IInformationHistoryService extends IService<InformationHistory>
     InformationHistory selectByCode(String code);
 
     List<InformationHistory> selectByCodes(List<String> split);
+
+    void delTurnoverZero();
 }

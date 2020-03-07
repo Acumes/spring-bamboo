@@ -45,4 +45,8 @@
 
     </select>
 
+    <delete id="delTurnoverZero">
+        DELETE FROM bamboo_information_history WHERE current_transaction_number = 0
+    </delete>
+
 </mapper>
