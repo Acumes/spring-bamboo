@@ -10,6 +10,7 @@
         <result column="current_price" property="currentPrice" />
         <result column="target_price" property="targetPrice" />
         <result column="concept" property="concept" />
+        <result column="amplitude" property="amplitude" />
         <result column="remark" property="remark" />
     </resultMap>
 
@@ -34,6 +35,12 @@
                 AND code like CONCAT('%',#{code},'%')
             </if>
         </where>
+    </select>
+
+    <select id="getPriceGtTarget" resultMap="BaseResultMap">
+        SELECT * FROM bamboo_basic_information
+        where current_price <![CDATA[ < ]]> target_price
+
     </select>
 
 </mapper>

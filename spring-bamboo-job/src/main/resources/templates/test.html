@@ -1,10 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+
+        table{width:100%;text-align:center;border:#ccc 1px solid;border-collapse: collapse;}
+        table th{border:#ccc 1px solid;}
+        table td{border:#ccc 1px solid;}
+    </style>
 </head>
 <body>
-    <p>测试页面</p>
+    <div>
+        <table border="1">
+            <tr>
+                <td>名称</td>
+                <td>当前</td>
+                <td>目标</td>
+            </tr>
+            <tr  th:each="entries,stat:${list}">
+                <td th:text="${entries.name}"></td>
+                <td th:text="${entries.currentPrice}"></td>
+                <td th:text="${entries.targetPrice}"></td>
+            </tr>
+        </#list>
+        </table>
+
+    </div>
 </body>
 </html>

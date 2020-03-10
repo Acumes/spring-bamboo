@@ -43,7 +43,7 @@ public class SharesScheduling {
     public void userWithdrawErrorOrFault() throws Exception {
         //
         Long timeMillis = System.currentTimeMillis();
-        Long startTime = DateUtils.getDateMillisecond(DateUtils.getStringDateShort() + " 09:25:53").getTime();
+        Long startTime = DateUtils.getDateMillisecond(DateUtils.getStringDateShort() + " 09:28:53").getTime();
         Long endTime = DateUtils.getDateMillisecond(DateUtils.getStringDateShort() + " 15:10:05").getTime();
         Date now = new Date();
         if(timeMillis.longValue() >startTime.longValue() && timeMillis.longValue()  < endTime){
@@ -128,6 +128,7 @@ public class SharesScheduling {
             }
         }
         insertInfo.setRate(new BigDecimal(bili.toString()));
+        basicInformation.setAmplitude(new BigDecimal(bili.toString()));
         insertInfo.setTransactionNumber(new Integer(split1[8]));
         insertInfo.setTurnoverAmount(new BigDecimal(split1[9]));
         insertInfo.setHighestPrice(new BigDecimal(split1[4]));

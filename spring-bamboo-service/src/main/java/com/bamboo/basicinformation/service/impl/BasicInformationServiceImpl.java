@@ -51,4 +51,9 @@ public class BasicInformationServiceImpl extends ServiceImpl<BasicInformationDao
         BeanUtils.copyProperties(request,basicInformation);
         basicInformationDao.insert(basicInformation);
     }
+
+    @Override
+    public List<BasicInformation> getPriceGtTarget() {
+        return basicInformationDao.getPriceGtTarget();
+    }
 }

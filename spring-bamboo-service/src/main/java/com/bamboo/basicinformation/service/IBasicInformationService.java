@@ -32,4 +32,6 @@ public interface IBasicInformationService extends IService<BasicInformation> {
     PageInfo<BasicInformation> getList(BasicInformationRequest request);
 
     void add(BasicInformationRequest request);
+
+    List<BasicInformation> getPriceGtTarget();
 }
