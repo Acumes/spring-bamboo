@@ -12,6 +12,8 @@
         <result column="concept" property="concept" />
         <result column="amplitude" property="amplitude" />
         <result column="remark" property="remark" />
+        <result column="do_t" property="doT" />
+        <result column="do_t_amplitude" property="doTAmplitude" />
     </resultMap>
 
 <!--    <select id="getCodes" resultType="string">-->
@@ -41,6 +43,10 @@
         SELECT * FROM bamboo_basic_information
         where current_price <![CDATA[ < ]]> target_price
 
+    </select>
+    <select id="getAmplitudeGtTarget" resultMap="BaseResultMap">
+        select * from bamboo_basic_information
+        where do_t = '1' AND ABS(amplitude) > do_t_amplitude
     </select>
 
 </mapper>

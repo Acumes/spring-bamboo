@@ -13,7 +13,7 @@
 </head>
 <body>
     <div>
-        <p>目标 <button onclick="test()">test</button></p>
+        <p>T <button onclick="test()">test</button></p>
         <div id="div"></div>
         <table border="1">
             <tr>
@@ -60,7 +60,7 @@
         // })
     });
     function test(){
-        $.get("http://localhost:9965/bamboo/test/updateTargetPrice", function(result){
+        $.get("http://localhost:9965/bamboo/test/updateAmplitude", function(result){
             $("#div").html(result);
         });
     }

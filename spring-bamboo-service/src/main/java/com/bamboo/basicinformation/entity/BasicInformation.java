@@ -53,6 +53,10 @@ public class BasicInformation extends Model<BasicInformation> {
     private BigDecimal amplitude;
     @ApiModelProperty(value = "备注")
     private String remark;
+    @ApiModelProperty(value = "T")
+    private String doT;
+    @ApiModelProperty(value = "doTAmplitude")
+    private BigDecimal doTAmplitude;
     @ApiModelProperty(value = "创建时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date createTime = new Date();

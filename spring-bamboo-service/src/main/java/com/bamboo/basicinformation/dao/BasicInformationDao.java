@@ -29,4 +29,6 @@ public interface BasicInformationDao extends BaseMapper<BasicInformation> {
     List<BasicInformation> getList(BasicInformationRequest request);
 
     List<BasicInformation> getPriceGtTarget();
+
+    List<BasicInformation> getAmplitudeGtTarget();
 }

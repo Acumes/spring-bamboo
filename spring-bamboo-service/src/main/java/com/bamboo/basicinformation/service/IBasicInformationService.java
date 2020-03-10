@@ -34,4 +34,6 @@ public interface IBasicInformationService extends IService<BasicInformation> {
     void add(BasicInformationRequest request);
 
     List<BasicInformation> getPriceGtTarget();
+
+    List<BasicInformation> getAmplitudeGtTarget();
 }

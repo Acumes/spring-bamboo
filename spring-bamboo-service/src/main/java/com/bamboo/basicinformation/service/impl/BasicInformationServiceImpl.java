@@ -56,4 +56,9 @@ public class BasicInformationServiceImpl extends ServiceImpl<BasicInformationDao
     public List<BasicInformation> getPriceGtTarget() {
         return basicInformationDao.getPriceGtTarget();
     }
+
+    @Override
+    public List<BasicInformation> getAmplitudeGtTarget() {
+        return basicInformationDao.getAmplitudeGtTarget();
+    }
 }

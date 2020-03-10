@@ -9,6 +9,7 @@ import io.swagger.models.auth.In;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -37,6 +38,8 @@ public class SharesScheduling {
 
     @Autowired
     private RedisUtil redisUtil;
+    @Autowired
+    private RedisTemplate<String,String> redisTemplate;
 
 //    @Scheduled(cron = "0 0 * * * ?") //每小时
     @Scheduled(cron = "0/3 * *  * * ? ") // 每分钟
@@ -44,7 +47,7 @@ public class SharesScheduling {
         //
         Long timeMillis = System.currentTimeMillis();
         Long startTime = DateUtils.getDateMillisecond(DateUtils.getStringDateShort() + " 09:28:53").getTime();
-        Long endTime = DateUtils.getDateMillisecond(DateUtils.getStringDateShort() + " 19:10:05").getTime();
+        Long endTime = DateUtils.getDateMillisecond(DateUtils.getStringDateShort() + " 15:10:05").getTime();
         Date now = new Date();
         if(timeMillis.longValue() >startTime.longValue() && timeMillis.longValue()  < endTime){
             log.info("=====>>>>>开始查  {}", System.currentTimeMillis());
@@ -182,7 +185,8 @@ public class SharesScheduling {
         log.info("开始清理为0的数据");
         informationHistoryService.delTurnoverZero();
         //添加一条当前时间的
-
+        redisTemplate.opsForValue().set("targetPriceCron","1");
+        redisTemplate.opsForValue().set("targetAmplitudeCron","1");
         List<BasicInformation> basicInformationList = basicInformationService.getCodes();
         List<InformationHistory> informationHistories = new ArrayList<>();
         Date now = new Date();
@@ -213,6 +217,67 @@ public class SharesScheduling {
         }
 
         informationHistoryService.saveBatch(informationHistories);
+    }
+
+    @Scheduled(cron = "0/3 * *  * * ? ") // 每分钟
+    public void targetPriceCron() throws ParseException {
+        //
+        Long timeMillis = System.currentTimeMillis();
+        Long startTime = DateUtils.getDateMillisecond(DateUtils.getStringDateShort() + " 09:28:53").getTime();
+        Long endTime = DateUtils.getDateMillisecond(DateUtils.getStringDateShort() + " 15:10:05").getTime();
+        Date now = new Date();
+        if(timeMillis.longValue() >startTime.longValue() && timeMillis.longValue()  < endTime){
+            List<BasicInformation> priceGtTarget = basicInformationService.getPriceGtTarget();
+            if(!CommonUtil.isEmpty(priceGtTarget)){
+                //web端可以控制
+                String targetPriceKey = redisTemplate.opsForValue().get("targetPriceCron");
+                if(CommonUtil.isEmpty(targetPriceKey)){
+                    targetPriceKey = "1";
+                    redisTemplate.opsForValue().set("targetPriceCron","1");
+                }
+                long time = System.currentTimeMillis() + 1000*44;
+                if("1".equalsIgnoreCase(targetPriceKey)){
+                    if(redisUtil.lock("targetPriceCronLock", String.valueOf(time))){
+                        log.info("打开浏览器");
+                        CommonUtil.openLiulanqi();
+                        redisTemplate.opsForValue().set("targetPriceCron","0");
+                    }else{
+                        log.info("已经提醒过了");
+                    }
+                }
+
+            }
+        }
+    }
+    @Scheduled(cron = "0/3 * *  * * ? ") // 每分钟
+    public void targetAmplitudeCron() throws ParseException {
+        //
+        Long timeMillis = System.currentTimeMillis();
+        Long startTime = DateUtils.getDateMillisecond(DateUtils.getStringDateShort() + " 09:28:53").getTime();
+        Long endTime = DateUtils.getDateMillisecond(DateUtils.getStringDateShort() + " 15:10:05").getTime();
+        Date now = new Date();
+        if(timeMillis.longValue() >startTime.longValue() && timeMillis.longValue()  < endTime){
+            List<BasicInformation> priceGtTarget = basicInformationService.getAmplitudeGtTarget();
+            if(!CommonUtil.isEmpty(priceGtTarget)){
+                //web端可以控制
+                String targetPriceKey = redisTemplate.opsForValue().get("targetAmplitudeCron");
+                if(CommonUtil.isEmpty(targetPriceKey)){
+                    targetPriceKey = "1";
+                    redisTemplate.opsForValue().set("targetAmplitudeCron","1");
+                }
+                long time = System.currentTimeMillis() + 1000*44;
+                if("1".equalsIgnoreCase(targetPriceKey)){
+                    if(redisUtil.lock("targetAmplitudeCronLock", String.valueOf(time))){
+                        log.info("打开浏览器");
+                        CommonUtil.openLiulanqi();
+                        redisTemplate.opsForValue().set("targetAmplitudeCron","0");
+                    }else{
+                        log.info("已经提醒过了");
+                    }
+                }
+            }
+        }
+
     }
 
     public static void main(String[] args) {
