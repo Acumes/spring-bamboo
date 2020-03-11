@@ -47,7 +47,7 @@ public class SharesScheduling {
         //
         Long timeMillis = System.currentTimeMillis();
         Long startTime = DateUtils.getDateMillisecond(DateUtils.getStringDateShort() + " 09:28:53").getTime();
-        Long endTime = DateUtils.getDateMillisecond(DateUtils.getStringDateShort() + " 15:10:05").getTime();
+        Long endTime = DateUtils.getDateMillisecond(DateUtils.getStringDateShort() + " 22:10:05").getTime();
         Date now = new Date();
         if(timeMillis.longValue() >startTime.longValue() && timeMillis.longValue()  < endTime){
             log.info("=====>>>>>开始查  {}", System.currentTimeMillis());
@@ -125,11 +125,6 @@ public class SharesScheduling {
         insertInfo.setName(name);
         insertInfo.setCurrentPrice(currentPrice);
         insertInfo.setOpeningPrice(new BigDecimal(split1[1]));
-        if("sz000735".equalsIgnoreCase(code1)){
-            if(bili.abs().compareTo(new BigDecimal("4.5")) >= 0){
-                CommonUtil.openLiulanqi();
-            }
-        }
         insertInfo.setRate(new BigDecimal(bili.toString()));
         basicInformation.setAmplitude(new BigDecimal(bili.toString()));
         insertInfo.setTransactionNumber(new Integer(split1[8]));
