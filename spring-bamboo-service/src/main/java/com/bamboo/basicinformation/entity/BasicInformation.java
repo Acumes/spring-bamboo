@@ -47,6 +47,24 @@ public class BasicInformation extends Model<BasicInformation> {
     @ApiModelProperty(value = "目标价格")
     private BigDecimal targetPrice;
 
+    @ApiModelProperty(value = "涨跌停价格幅度")
+    private BigDecimal limitPriceAmplitude;
+    @ApiModelProperty(value = "涨停价")
+    private BigDecimal limitUpPrice;
+    @ApiModelProperty(value = "涨停封单数")
+    private Long limitUpSealingSheet;
+    @ApiModelProperty(value = "涨停封单预警数")
+    private Long limitUpSealingSheetTip;
+    @ApiModelProperty(value = "跌停价")
+    private BigDecimal limitDownPrice;
+    @ApiModelProperty(value = "跌停封单数")
+    private Long limitDownSealingSheet;
+    @ApiModelProperty(value = "跌停封单预警数")
+    private Long limitDownSealingSheetTip;
+
+
+
+
     @ApiModelProperty(value = "概念")
     private String concept;
     @ApiModelProperty(value = "振幅")

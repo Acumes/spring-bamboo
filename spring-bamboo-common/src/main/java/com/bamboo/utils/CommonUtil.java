@@ -254,7 +254,7 @@ public class CommonUtil {
 //        }
 //    }
 
-    public static void openLiulanqi(){
+    public static void openLiulanqi(String html){
 //        if (java.awt.Desktop.isDesktopSupported()) {
 //            try {
 //                // 创建一个URI实例
@@ -272,7 +272,7 @@ public class CommonUtil {
 //            }
 //        }
         try {
-            Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler http://localhost:9965/bamboo/test/html");
+            Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+ html);
         }catch (Exception e){
             e.printStackTrace();
         }

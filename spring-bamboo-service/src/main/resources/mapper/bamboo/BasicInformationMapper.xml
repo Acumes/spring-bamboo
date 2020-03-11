@@ -9,6 +9,13 @@
         <result column="name" property="name" />
         <result column="current_price" property="currentPrice" />
         <result column="target_price" property="targetPrice" />
+        <result column="limit_price_amplitude" property="limitPriceAmplitude" />
+        <result column="limit_up_price" property="limitUpPrice" />
+        <result column="limit_up_sealing_sheet" property="limitUpSealingSheet" />
+        <result column="limit_up_sealing_sheet_tip" property="limitUpSealingSheetTip" />
+        <result column="limit_down_price" property="limitDownPrice" />
+        <result column="limit_down_sealing_sheet" property="limitDownSealingSheet" />
+        <result column="limit_down_sealing_sheet_tip" property="limitDownSealingSheetTip" />
         <result column="concept" property="concept" />
         <result column="amplitude" property="amplitude" />
         <result column="remark" property="remark" />
