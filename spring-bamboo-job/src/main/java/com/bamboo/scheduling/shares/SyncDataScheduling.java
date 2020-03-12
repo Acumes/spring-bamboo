@@ -45,7 +45,7 @@ public class SyncDataScheduling {
     public void userWithdrawErrorOrFault() throws Exception {
         //
         Long timeMillis = System.currentTimeMillis();
-        Long startTime = DateUtils.getDateMillisecond(DateUtils.getStringDateShort() + " 07:28:53").getTime();
+        Long startTime = DateUtils.getDateMillisecond(DateUtils.getStringDateShort() + " 09:28:53").getTime();
         Long endTime = DateUtils.getDateMillisecond(DateUtils.getStringDateShort() + " 15:10:05").getTime();
         Date now = new Date();
         if(timeMillis.longValue() >startTime.longValue() && timeMillis.longValue()  < endTime){
