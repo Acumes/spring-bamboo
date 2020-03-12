@@ -45,11 +45,11 @@ public class SyncDataScheduling {
     public void userWithdrawErrorOrFault() throws Exception {
         //
         Long timeMillis = System.currentTimeMillis();
-        Long startTime = DateUtils.getDateMillisecond(DateUtils.getStringDateShort() + " 09:28:53").getTime();
+        Long startTime = DateUtils.getDateMillisecond(DateUtils.getStringDateShort() + " 07:28:53").getTime();
         Long endTime = DateUtils.getDateMillisecond(DateUtils.getStringDateShort() + " 15:10:05").getTime();
         Date now = new Date();
         if(timeMillis.longValue() >startTime.longValue() && timeMillis.longValue()  < endTime){
-            log.info("=====>>>>>开始查  {}", System.currentTimeMillis());
+            log.info("=====>>>>>gpSyncDataScheduling开始查  {}", DateUtils.getStringDate());
             long time = System.currentTimeMillis() + 1000*1;
             if(redisUtil.lock("gpSyncDataScheduling", String.valueOf(time))){
                 List<BasicInformation> basicInformationList = basicInformationService.getCodes();
@@ -111,6 +111,8 @@ public class SyncDataScheduling {
                 if(!CommonUtil.isEmpty(informationHistories)){
                     informationHistoryService.saveBatch(informationHistories);
                 }
+            }else{
+                log.info("我被锁住了gpSyncDataScheduling"+DateUtils.getStringDate());
             }
         }
     }
