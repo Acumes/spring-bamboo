@@ -15,5 +15,5 @@ import java.util.List;
  */
 public interface IBasicInformationTipsService extends IService<BasicInformationTips> {
 
-    List<BasicInformationTips> getCodesToday(List<String> codes,String type);
+    List<BasicInformationTips> getCodesToday(List<String> codes,String type,String date);
 }

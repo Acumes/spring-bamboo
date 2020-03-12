@@ -25,7 +25,7 @@ public class BasicInformationTipsServiceImpl extends ServiceImpl<BasicInformatio
     private BasicInformationTipsDao basicInformationTipsDao;
 
     @Override
-    public List<BasicInformationTips> getCodesToday(List<String> codes,String type) {
-        return basicInformationTipsDao.getCodesToday(codes,type, DateUtils.getStringDateShort());
+    public List<BasicInformationTips> getCodesToday(List<String> codes,String type,String date) {
+        return basicInformationTipsDao.getCodesToday(codes,type, date);
     }
 }

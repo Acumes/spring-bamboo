@@ -30,7 +30,7 @@ public class TestViewController {
     public ModelAndView actToAdd() {
         ModelAndView m = new ModelAndView("test");
         //查询谁当前价格低于目标价格
-        List<BasicInformationTips> list = basicInformationTipsService.getCodesToday(null,"1");
+        List<BasicInformationTips> list = basicInformationTipsService.getCodesToday(null,"1",null);
         m.addObject("list",list);
         return m;
     }
@@ -46,7 +46,7 @@ public class TestViewController {
     public ModelAndView amplitudeHtml() {
         ModelAndView m = new ModelAndView("amplitude");
         //查询谁当前价格低于目标价格
-        List<BasicInformation> list = basicInformationService.getAmplitudeGtTarget();
+        List<BasicInformationTips> list = basicInformationTipsService.getCodesToday(null,"2",null);
         m.addObject("list",list);
         return m;
     }
@@ -55,7 +55,7 @@ public class TestViewController {
     public BaseResponse<String> updateAmplitude(@RequestParam String id) {
 //        redisTemplate.opsForValue().set("targetAmplitudeCron","1");
         BasicInformationTips byId = basicInformationTipsService.getById(id);
-        byId.setIsDelete("0");
+        byId.setIsDelete("2");
         basicInformationTipsService.updateById(byId);
         return new BaseResponse<>("成功");
     }

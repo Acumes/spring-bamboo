@@ -16,7 +16,10 @@
 
     <select id="getCodesToday" resultMap="BaseResultMap">
         SELECT * FROM bamboo_basic_information_tips
-        WHERE DATE_FORMAT( create_time, '%Y-%m-%d' ) = #{date} AND type = #{type} AND is_delete = '1'
+        WHERE  type = #{type} AND is_delete = '1'
+        <if test="date != null and date != ''">
+            AND DATE_FORMAT( create_time, '%Y-%m-%d' ) = #{date}
+        </if>
         <if test="codes != null and codes.size > 0">
             AND code IN
             <foreach collection="codes" index="index" item="item" open="(" separator="," close=")">

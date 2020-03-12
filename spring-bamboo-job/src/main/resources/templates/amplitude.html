@@ -21,12 +21,16 @@
                 <td>当前</td>
                 <td>目标</td>
                 <td>幅度</td>
+                <td>时间</td>
+                <td>操作</td>
             </tr>
             <tr  th:each="entries,stat:${list}">
                 <td th:text="${entries.name}"></td>
                 <td th:text="${entries.currentPrice}"></td>
                 <td th:text="${entries.targetPrice}"></td>
                 <td th:text="${entries.amplitude}"></td>
+                <td th:text="${#dates.format(entries.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                <td><button th:onclick="test('[[${entries.id}]]')">清除</button></td>
             </tr>
         </#list>
         </table>
@@ -59,8 +63,9 @@
         //     }
         // })
     });
-    function test(){
-        $.get("http://localhost:9965/bamboo/test/updateAmplitude", function(result){
+
+    function test(id){
+        $.get("http://localhost:9965/bamboo/test/updateAmplitude?id="+id, function(result){
             $("#div").html(result);
         });
     }
