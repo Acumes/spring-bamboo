@@ -55,7 +55,7 @@ public class TestViewController {
     public BaseResponse<String> updateAmplitude(@RequestParam String id) {
 //        redisTemplate.opsForValue().set("targetAmplitudeCron","1");
         BasicInformationTips byId = basicInformationTipsService.getById(id);
-        byId.setIsDelete("2");
+        byId.setIsDelete("0");
         basicInformationTipsService.updateById(byId);
         return new BaseResponse<>("成功");
     }
