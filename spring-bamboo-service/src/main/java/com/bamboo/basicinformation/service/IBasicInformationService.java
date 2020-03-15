@@ -36,4 +36,6 @@ public interface IBasicInformationService extends IService<BasicInformation> {
     List<BasicInformation> getPriceGtTarget();
 
     List<BasicInformation> getAmplitudeGtTarget();
+
+    List<BasicInformation> salePriceCron();
 }

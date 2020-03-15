@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bamboo.coinsymbol.dao.CoinSymbolDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.bamboo.coinsymbol.entity.CoinSymbol">
+        <id column="id" property="id" />
+        <result column="base_currency" property="baseCurrency" />
+        <result column="quote_currency" property="quoteCurrency" />
+        <result column="prices_precision" property="pricesPrecision" />
+        <result column="amount_precision" property="amountPrecision" />
+        <result column="symbol_partition" property="symbolPartition" />
+        <result column="symbol" property="symbol" />
+        <result column="state" property="state" />
+        <result column="value_precision" property="valuePrecision" />
+        <result column="min_order_amt" property="minOrderAmt" />
+        <result column="max_order_amt" property="maxOrderAmt" />
+        <result column="min_order_value" property="minOrderValue" />
+        <result column="leverage_ratio" property="leverageRatio" />
+    </resultMap>
+
+</mapper>

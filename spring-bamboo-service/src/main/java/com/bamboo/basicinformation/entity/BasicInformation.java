@@ -46,6 +46,8 @@ public class BasicInformation extends Model<BasicInformation> {
 
     @ApiModelProperty(value = "目标价格")
     private BigDecimal targetPrice;
+    @ApiModelProperty(value = "目标价格")
+    private BigDecimal salePrice;
 
     @ApiModelProperty(value = "涨跌停价格幅度")
     private BigDecimal limitPriceAmplitude;

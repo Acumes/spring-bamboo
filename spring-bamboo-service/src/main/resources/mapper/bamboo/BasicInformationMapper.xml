@@ -9,6 +9,7 @@
         <result column="name" property="name" />
         <result column="current_price" property="currentPrice" />
         <result column="target_price" property="targetPrice" />
+        <result column="sale_price" property="salePrice" />
         <result column="limit_price_amplitude" property="limitPriceAmplitude" />
         <result column="limit_up_price" property="limitUpPrice" />
         <result column="limit_up_sealing_sheet" property="limitUpSealingSheet" />
@@ -54,6 +55,10 @@
     <select id="getAmplitudeGtTarget" resultMap="BaseResultMap">
         select * from bamboo_basic_information
         where do_t = '1' AND ABS(amplitude) > do_t_amplitude
+    </select>
+    <select id="salePriceCron" resultMap="BaseResultMap">
+        SELECT * FROM bamboo_basic_information
+        where current_price <![CDATA[ > ]]> sale_price
     </select>
 
 </mapper>

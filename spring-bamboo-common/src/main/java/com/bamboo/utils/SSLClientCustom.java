@@ -1,6 +1,7 @@
 package com.bamboo.utils;
 
 
+import org.apache.http.HttpHost;
 import org.apache.http.conn.ssl.AllowAllHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -53,8 +54,9 @@ public class SSLClientCustom {
      * @return
      * @throws Exception
      */
-    public static CloseableHttpClient getHttpClinet() throws Exception {
+    public static CloseableHttpClient getHttpClinet(HttpHost httpHost) throws Exception {
         CloseableHttpClient httpClient = HttpClients.custom().setSSLSocketFactory(sslConnectionSocketFactory)
+                .setProxy(httpHost)
                 .build();
         return httpClient;
     }

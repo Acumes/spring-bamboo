@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+        table{width:100%;text-align:center;border:#ccc 1px solid;border-collapse: collapse;}
+        table th{border:#ccc 1px solid;}
+        table td{border:#ccc 1px solid;}
+    </style>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+    <div>
+        <h2 align="center">卖出BTC </h2>
+        <div id="div"></div>
+        <table border="1">
+            <tr>
+                <td>名称</td>
+                <td>当前</td>
+                <td>目标</td>
+                <td>卖出</td>
+                <td>时间</td>
+                <td>操作</td>
+            </tr>
+            <tr  th:each="entries,stat:${list}">
+                <td th:text="${entries.coinName}"></td>
+                <td th:text="${entries.currentPrice}"></td>
+                <td th:text="${entries.targetPrice}"></td>
+                <td th:text="${entries.salePrice}"></td>
+                <td th:text="${#dates.format(entries.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                <td><button th:onclick="test('[[${entries.id}]]')">清除</button></td>
+            </tr>
+        </#list>
+        </table>
+    </div>
+</body>
+<script>
+    var formDataSubmit = new FormData();
+    $(document).ready(function(){
+        // var user = {
+        //     "username": "admin",
+        //     "password" : "123456"
+        // }
+        // $.ajax({
+        //     url:"http://localhost:8090/userLogin",
+        //     type: 'get',
+        //     cache: false,
+        //     async: true,
+        //     contentType: 'application/json',
+        //     processData: false,
+        //     success: function (result) {
+        //         console.log(result)
+        //     },
+        //     failure: function () {
+        //         console.log('failure')
+        //     },
+        //     error: function (XHRequest, ajaxOptions, thrownError) {
+        //         console.log(XHRequest)
+        //
+        //     }
+        // })
+    });
+    function test(id){
+        $.get("http://localhost:9965/bamboo/test/saleBtcUpdate?id="+id, function(result){
+            $("#div").html(result);
+        });
+    }
+    function submit(){
+        formDataSubmit.set("file",$('#file').prop('files')[0]);
+        formDataSubmit.set("coinName",'123')
+        formDataSubmit.set("fee",'123')
+        formDataSubmit.set("req_id","ab1000014101")
+        formDataSubmit.set("method","openApiParkService.uploadEnterInfo")
+        formDataSubmit.set("timestemp","1566370052900")
+        formDataSubmit.set("nonce","13579")
+        formDataSubmit.set("mch_id","1")
+        formDataSubmit.set("data","{}")
+        formDataSubmit.set("sign","35AF0622297521395EBDD2722513733A")
+        str = "{\"req_id\":\"ab1000014101\",\"method\":\"openApiParkService.uploadEnterInfo\",\"timestemp\":\"1566370052900\",\"nonce\":\"13579\"," +
+            "\"data\":\""+formDataSubmit+"\",\"mch_id\":\"1\",\"sign\":\"657F1CF0ED51BD43E2E47A8D47B561D6\"}"
+        $.ajax({
+            url:"http://192.168.1.68:8088/miner/channelbusiness/importDevices",
+            data: formDataSubmit,
+            type: 'post',
+            cache: false,
+            async: true,
+            headers:{"Authorization":"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJENDRDRkNBRi0wNkJBLTQ2QzktODA3MC03RTY1RENBQzUzODEiLCJtb2JpbGUiOiIxODk5OTk5OTk5OSIsInVzZXJOYW1lIjoiaGFvamllIiwiZXhwIjoxNTY4MTY1NzI0LCJ1c2VySWQiOiJENDRDRkNBRi0wNkJBLTQ2QzktODA3MC03RTY1RENBQzUzODEiLCJpYXQiOjE1Njc1NjA5MjQsImp0aSI6IkQ0NENGQ0FGLTA2QkEtNDZDOS04MDcwLTdFNjVEQ0FDNTM4MSJ9.CEgaeLpgXErqXFoNK1Xq1DXN_EFrO4j3rZH73WVuv3w"},
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                console.log(result)
+            },
+            failure: function () {
+                console.log('failure')
+            },
+            error: function (XHRequest, ajaxOptions, thrownError) {
+                console.log(XHRequest)
+
+            }
+
+        });
+    }
+</script>
+</html>

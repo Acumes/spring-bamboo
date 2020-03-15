@@ -22,7 +22,8 @@ import java.util.List;
  * @since 2020-01-07
  */
 @Service
-public class BasicInformationServiceImpl extends ServiceImpl<BasicInformationDao, BasicInformation> implements IBasicInformationService {
+public class
+BasicInformationServiceImpl extends ServiceImpl<BasicInformationDao, BasicInformation> implements IBasicInformationService {
 
     @Autowired
     private BasicInformationDao basicInformationDao;
@@ -60,5 +61,10 @@ public class BasicInformationServiceImpl extends ServiceImpl<BasicInformationDao
     @Override
     public List<BasicInformation> getAmplitudeGtTarget() {
         return basicInformationDao.getAmplitudeGtTarget();
+    }
+
+    @Override
+    public List<BasicInformation> salePriceCron() {
+        return basicInformationDao.salePriceCron();
     }
 }

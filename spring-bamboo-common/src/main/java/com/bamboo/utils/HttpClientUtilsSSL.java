@@ -1,9 +1,6 @@
 package com.bamboo.utils;
 
-import org.apache.http.Consts;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpStatus;
-import org.apache.http.NameValuePair;
+import org.apache.http.*;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -45,7 +42,7 @@ public class HttpClientUtilsSSL {
 		InputStream inputStream = null;
 		BufferedReader rd = null;
 		try {
-			httpClient = SSLClientCustom.getHttpClinet();
+			httpClient = SSLClientCustom.getHttpClinet(null);
 			HttpPost httpPost = new HttpPost(url);
 			if(containHeader){
 				// 请求头header信息
@@ -110,7 +107,8 @@ public class HttpClientUtilsSSL {
 	}
 
 
-	public static String doGetRequest(String url, Map<String, String> header, Map<String, String> params,boolean containHeader) {
+	public static String doGetRequest(String url, Map<String, String> header, Map<String, String> params,
+									  boolean containHeader, HttpHost httpHost) {
 		String resultStr = "";
 		if (CommonUtil.isEmpty(url)) {
 			return resultStr;
@@ -120,15 +118,15 @@ public class HttpClientUtilsSSL {
 		InputStream inputStream = null;
 		BufferedReader rd = null;
 		try {
-			httpClient = SSLClientCustom.getHttpClinet();
+			httpClient = SSLClientCustom.getHttpClinet(httpHost);
 			// 请求参数信息
 			if (!CommonUtil.isEmpty(params)) {
 				url = url + buildUrl(params);
 			}
 			HttpGet httpGet = new HttpGet(url);
 			RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(5000)// 连接超时
-					.setConnectionRequestTimeout(5000)// 请求超时
-					.setSocketTimeout(5000)// 套接字连接超时
+					.setConnectionRequestTimeout(35000)// 请求超时
+					.setSocketTimeout(35000)// 套接字连接超时
 					.setRedirectsEnabled(true).build();// 允许重定向
 			httpGet.setConfig(requestConfig);
 			if(containHeader){
