@@ -139,12 +139,12 @@ public class SyncDataScheduling {
 //        basicInformation.setBuyOne(new BigDecimal(split1[11]));
 //        basicInformation.setSellOne(new BigDecimal(split1[21]));
         //判断如果是涨停的话就设置涨停封单数
-        if(basicInformation.getLimitUpPrice().compareTo(currentPrice) == 0){
-            basicInformation.setLimitUpSealingSheet(Long.valueOf(split1[11]));
-        }
-        if(basicInformation.getLimitDownPrice().compareTo(currentPrice) == 0){
-            basicInformation.setLimitDownSealingSheet(Long.valueOf(split1[21]));
-        }
+//        if(basicInformation.getLimitUpPrice().compareTo(currentPrice) == 0){
+//            basicInformation.setLimitUpSealingSheet(Long.valueOf(split1[11]));
+//        }
+//        if(basicInformation.getLimitDownPrice().compareTo(currentPrice) == 0){
+//            basicInformation.setLimitDownSealingSheet(Long.valueOf(split1[21]));
+//        }
         insertInfo.setCreateTimeStamp(now.getTime());
         if(CommonUtil.isEmpty(informationHistory)){
             insertInfo.setCurrentTransactionNumber(insertInfo.getTransactionNumber()/100);
