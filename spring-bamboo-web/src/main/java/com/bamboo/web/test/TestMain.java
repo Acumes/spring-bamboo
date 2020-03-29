@@ -23,8 +23,8 @@ public class TestMain {
         headers.put("Authorization", "APPCODE " + appcode);
         Map<String, String> querys = new HashMap<String, String>();
         querys.put("__userId", "1518668800502017");
-        querys.put("identifyNum", "441423199412270412");
-        querys.put("userName", "黄铁锋");
+        querys.put("identifyNum", "441423199412270411");
+        querys.put("userName", "黄铁锋阿萨德");
         querys.put("verifyKey", "IVqmXoOBYuUVbU");
 
 

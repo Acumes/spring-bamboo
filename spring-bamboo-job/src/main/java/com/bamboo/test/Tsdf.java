@@ -1,5 +1,6 @@
 package com.bamboo.test;
 
+import com.alibaba.fastjson.JSON;
 import com.bamboo.test.entity.Peitu;
 import com.bamboo.test.entity.Yinpin;
 import com.bamboo.test.service.IPeituService;
@@ -8,14 +9,18 @@ import com.bamboo.utils.CommonUtil;
 import com.bamboo.utils.DateUtils;
 import com.bamboo.utils.Excel2Util;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.compress.utils.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import java.io.*;
+import java.security.KeyFactory;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.spec.PKCS8EncodedKeySpec;
 import java.text.ParseException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -129,11 +134,53 @@ public class Tsdf {
 
     public static void main(String[] args) {
 //        CommonUtil.openLiulanqi();
-        List<Integer> a = Arrays.asList(1,4,7,43,23,42,541,234,46);
-        System.out.println(a);
-        a=a.stream().sorted().collect(Collectors.toList());
-        System.out.println(a);
+//        List<Integer> a = Arrays.asList(1,4,7,43,23,42,541,234,46);
+//        System.out.println(a);
+//        a=a.stream().sorted().collect(Collectors.toList());
+//        System.out.println(a);
+        for(int i = 7; i > 1; i--){
+            System.out.println(i);
+        }
+        System.out.println("======");
+    }
 
+    public static void verifySign(String ivSign,String verifySecret) {
+        try {
+            byte[] encryptedData = java.util.Base64.getDecoder().decode(ivSign.getBytes("utf-8"));
+            byte[] keyData = java.util.Base64.getDecoder().decode(verifySecret.getBytes());
+            PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keyData);
+            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+            RSAPrivateKey privateKey = (RSAPrivateKey) keyFactory.generatePrivate(keySpec);
+            Cipher cipher = Cipher.getInstance("RSA");
+            cipher.init(Cipher.DECRYPT_MODE, privateKey);
+            String content = new String(doBlock(encryptedData, privateKey.getModulus().bitLength()/8, cipher),"utf-8");
+            Map<String,String> map = JSON.parseObject(content,Map.class);
+            //校验通过
+        }catch (Exception e){
+
+        }
+    }
+
+    private static byte[] doBlock(byte[] encryptedData, int blockSize, Cipher cipher) throws Exception {
+        int inputLen = encryptedData.length;
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        int offSet = 0;
+        byte[] cache;
+        int i = 0;
+        // 对数据分段解密
+        while (inputLen - offSet > 0) {
+            if (inputLen - offSet > blockSize) {
+                cache = cipher.doFinal(encryptedData, offSet, blockSize);
+            }else {
+                cache = cipher.doFinal(encryptedData, offSet, inputLen - offSet);
+            }
+            out.write(cache, 0, cache.length);
+            i++;
+            offSet = i * blockSize;
+        }
+        byte[] decryptedData = out.toByteArray();
+        IOUtils.closeQuietly(out);
+        return decryptedData;
     }
 
 }

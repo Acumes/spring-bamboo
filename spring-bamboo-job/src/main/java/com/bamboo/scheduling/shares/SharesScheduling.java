@@ -249,6 +249,7 @@
 //
 //    //计算涨跌停价格
 //    @Scheduled(cron = "0 30 15 * * ? ") // 每分钟
+////    @Scheduled(cron = "10 * * * * ? ") // 每分钟
 //    public void limitUpAndDownPrice(){
 //        List<BasicInformation> priceGtTarget = basicInformationService.list();
 //        for(BasicInformation basicInformation : priceGtTarget){
