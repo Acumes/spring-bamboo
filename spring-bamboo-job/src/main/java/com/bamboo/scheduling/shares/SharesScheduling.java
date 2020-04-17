@@ -261,6 +261,13 @@
 //        basicInformationService.updateBatchById(priceGtTarget);
 //    }
 //
+//    @Scheduled(cron = "45 * * * * ? ") // 每分钟
+//    public void limitUpAndDownPrice1(){
+//        log.info(DateUtils.getStringDate());
+//        System.out.println("1111111");
+//    }
+//
+//
 //
 //
 //  public static void main(String[] args) {
