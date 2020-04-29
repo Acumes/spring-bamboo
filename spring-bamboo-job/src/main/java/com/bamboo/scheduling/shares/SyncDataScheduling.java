@@ -1,10 +1,14 @@
 package com.bamboo.scheduling.shares;
 
+import com.alibaba.fastjson.JSON;
 import com.bamboo.basicinformation.entity.BasicInformation;
 import com.bamboo.basicinformation.service.IBasicInformationService;
 import com.bamboo.basicinformationtips.service.IBasicInformationTipsService;
 import com.bamboo.informationhistory.entity.InformationHistory;
 import com.bamboo.informationhistory.service.IInformationHistoryService;
+import com.bamboo.limitdowninformation.entity.LimitDownInformation;
+import com.bamboo.limitdowninformation.service.ILimitDownInformationService;
+import com.bamboo.test.entity.Dietie;
 import com.bamboo.utils.CommonUtil;
 import com.bamboo.utils.DateUtils;
 import com.bamboo.utils.HttpClientUtilsSSL;
@@ -40,6 +44,8 @@ public class SyncDataScheduling {
     private RedisTemplate<String,String> redisTemplate;
     @Autowired
     private IBasicInformationTipsService basicInformationTipsService;
+    @Autowired
+    private ILimitDownInformationService limitDownInformationService;
 
     @Scheduled(cron = "0/3 * *  * * ? ") // 每分钟
     public void userWithdrawErrorOrFault() throws Exception {
@@ -114,6 +120,44 @@ public class SyncDataScheduling {
             }else{
                 log.info("我被锁住了gpSyncDataScheduling"+DateUtils.getStringDate());
             }
+        }
+    }
+
+
+    @Scheduled(cron = "0 15 15 * * ?")// 每分钟
+//    @Scheduled(cron = "0/3 * *  * * ? ") // 每分钟
+    public void userDieTingGp() throws Exception {
+
+        log.info("=====>>>>>userDieTingGp开始查  {}", DateUtils.getStringDate());
+        long time = System.currentTimeMillis() + 1000*1;
+        if(redisUtil.lock("userDieTingGp", String.valueOf(time))){
+            String url = "http://45.push2.eastmoney.com/api/qt/clist/get?cb=jQuery112405701380065485717_1587607159901&pn=1&pz=400&po=0&np=1&ut=bd1d9ddb04089700cf9c27f6f7426281&fltt=2&invt=2&fid=f3&fs=m:0+t:6,m:0+t:13,m:0+t:80,m:1+t:2,m:1+t:23&fields=f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f12,f13,f14,f15,f16,f17,f18,f20,f21,f23,f24,f25,f22,f11,f62,f128,f136,f115,f152&_="+System.currentTimeMillis();
+            String body = HttpClientUtilsSSL.doGetRequest(url,null,null,false,null);
+            System.out.println(body);
+            StringBuffer sb = new StringBuffer();
+            sb.append(body.substring(42,body.length()-2));
+            System.out.println(sb);
+            Dietie blockHeightDto = JSON.parseObject(sb.toString(), Dietie.class);
+            System.out.println(blockHeightDto);
+            List<Dietie.DataBean.DiffBean> datas = blockHeightDto.getData().getDiff();
+            List<LimitDownInformation> add = new ArrayList<>();
+            for(Dietie.DataBean.DiffBean data : datas){
+                System.out.println(data);
+                LimitDownInformation limitDownInformation = new LimitDownInformation();
+                limitDownInformation.setAmplitude(new BigDecimal(data.getF3()));
+                limitDownInformation.setCode(data.getF12());
+                limitDownInformation.setName(data.getF14());
+                limitDownInformation.setCreateTime(new Date());
+                BigDecimal a = new BigDecimal(data.getF18()).subtract(new BigDecimal(data.getF2()).setScale(2));
+                limitDownInformation.setCurrentPrice(new BigDecimal(data.getF2()));
+                limitDownInformation.setRemark("跌了:"+a.toPlainString());
+                add.add(limitDownInformation);
+            }
+            if(!CommonUtil.isEmpty(add)){
+                limitDownInformationService.saveBatch(add);
+            }
+        }else{
+            log.info("我被锁住了userDieTingGp"+DateUtils.getStringDate());
         }
     }
 
