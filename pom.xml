@@ -28,7 +28,7 @@
         <java.version>1.8</java.version>
         <jjwt.version>0.9.1</jjwt.version>
         <fastjson.version>1.2.62</fastjson.version>
-        <httpclient.version>4.5.2</httpclient.version>
+        <httpclient.version>4.5.13</httpclient.version>
         <swagger.version>2.9.2</swagger.version>
         <swagger.bootstrap.version>1.9.3</swagger.bootstrap.version>
         <guava.version>23.0</guava.version>
